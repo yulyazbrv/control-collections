@@ -5,3 +5,6 @@ p {
   margin: 0;
   padding: 0;
 }
+.collection-wrapper{
+  cursor: pointer;
+}

@@ -1,10 +1,10 @@
 import { putHelper } from "../../helpers/apiHelper";
 
-export const updateCollection = async (id, name, decs, theme) => {
+export const updateCollection = async (id, name, description, theme) => {
   const response = await putHelper("/updateCollection", {
     id,
     name,
-    decs,
+    description,
     theme,
   });
   return response;

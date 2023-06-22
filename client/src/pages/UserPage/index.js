@@ -39,9 +39,7 @@ const UserPage = (props) => {
               <Button onClick={open} color="red" radius="lg" uppercase>
                 Create
               </Button>
-              <Button color="red" radius="lg" uppercase>
-                Update
-              </Button>
+
               <Button color="red" radius="lg" uppercase>
                 Delete
               </Button>

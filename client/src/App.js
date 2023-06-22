@@ -10,6 +10,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import jwtDecode from 'jwt-decode';
 import { useDispatch } from "react-redux";
 import { setUserEmail } from "./redux/slices/userSlice";
+import { CollectionPage } from "./pages/CollectionPage";
 function decodeToken(token) {
   try {
     const decodedToken = jwtDecode(token);
@@ -67,6 +68,10 @@ function App() {
           <Route
             path="/user"
             element={<UserPage auth={auth} setAuth={setAuth} />}
+          ></Route>
+          <Route
+            path="/collection"
+            element={<CollectionPage auth={auth} setAuth={setAuth} />}
           ></Route>
         </Routes>
       </AppShell>

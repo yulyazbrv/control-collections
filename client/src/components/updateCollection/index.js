@@ -1,21 +1,16 @@
 import { Drawer, Button, Flex, Title, Input } from "@mantine/core";
 import { useState } from "react";
-import { addCollection } from "../../api/collectionApi/addCollection";
-import { useDispatch, useSelector } from "react-redux";
-import { setCollection } from "../../redux/slices/collectionSlice";
+import { updateCollection } from "../../api/collectionApi/updateCollection";
 
-function CreateCollection(props) {
-  const { opened, close } = props;
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [theme, setTheme] = useState("");
+function UpdateCollection(props) {
+  const { opened, close, collection } = props;
   const [result, setResult] = useState("");
-  const dispatch = useDispatch();
-  const email = useSelector((state) => state.user.email);
-  const createClick = async () => {
+  const [name, setName] = useState(collection.name);
+  const [description, setDescription] = useState(collection.description);
+  const [theme, setTheme] = useState(collection.theme);
+  const updateClick = async () => {
     try {
-      const collection = await addCollection(email, name, description, theme);
-      dispatch(setCollection(collection));
+      await updateCollection(collection._id, name, description, theme);
       close();
     } catch (e) {
       setResult(e.message);
@@ -25,9 +20,10 @@ function CreateCollection(props) {
   return (
     <>
       <Drawer
+        position="bottom"
         opened={opened}
         onClose={close}
-        title="Create Collection"
+        title="Update Collection"
         overlayProps={{ opacity: 0.5, blur: 4 }}
       >
         <Flex align={"center"} justify={"center"}>
@@ -38,7 +34,7 @@ function CreateCollection(props) {
             w={400}
             h={500}
           >
-            <Title order={2}>Create collection</Title>
+            <Title order={2}>Update collection</Title>
             <Input
               placeholder="Name"
               value={name}
@@ -54,8 +50,8 @@ function CreateCollection(props) {
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
             />
-            <Button color="red" radius="lg" uppercase onClick={createClick}>
-              Create
+            <Button color="red" radius="lg" uppercase onClick={updateClick}>
+              Update
             </Button>
             <Title order={6}>{result}</Title>
           </Flex>
@@ -65,4 +61,4 @@ function CreateCollection(props) {
   );
 }
 
-export { CreateCollection };
+export { UpdateCollection };
