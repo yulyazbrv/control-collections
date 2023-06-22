@@ -7,28 +7,29 @@ import { Registration } from "./pages/Registration";
 import { UserPage } from "./pages/UserPage";
 import { AppShell, Header, MantineProvider } from "@mantine/core";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { checkAuth } from "./api/authApi/checkAuth";
-import { logoutUser } from "./api/authApi/logout";
+import jwtDecode from 'jwt-decode';
+import { useDispatch } from "react-redux";
+import { setUserEmail } from "./redux/slices/userSlice";
+function decodeToken(token) {
+  try {
+    const decodedToken = jwtDecode(token);
+    return decodedToken.email;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
 
 function App() {
   const [auth, setAuth] = useState();
   const navigate = useNavigate();
-  const check = async () => {
-    try {
-      const response = await checkAuth();
-      if (response.status === 500) {
-        navigate(`/`);
-      }
-    } catch (e) {
-      navigate(`/`);
-      setAuth(false);
-      logoutUser();
-    }
-  };
+  const dispatch = useDispatch()
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      check();
+      const email = decodeToken(token)
+      dispatch(setUserEmail(email))
     } else {
       navigate(`/`);
     }

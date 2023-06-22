@@ -1,6 +1,6 @@
 import { postHelper } from "../../helpers/apiHelper";
 
-export const addCollection = async (name, decs, theme) => {
-  const response = await postHelper("/addCollection", { name, decs, theme });
+export const addCollection = async (email, name, description, theme) => {
+  const response = await postHelper("/addCollection", {email, name, description, theme });
   return response;
 };

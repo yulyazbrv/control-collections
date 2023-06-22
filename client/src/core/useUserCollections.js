@@ -5,5 +5,5 @@ export const useUserCollections = (email) => {
   return useQuery("/getUserCollections", async () => {
     const collections = await getUserCollections(email);
     return collections;
-  });
+  }, {enabled: !!email});
 };
