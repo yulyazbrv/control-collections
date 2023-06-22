@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getUsers } from '../api/users';
+import { getUsers } from '../api/userApi/users';
 
 export const useUsers = () => {
   return useQuery('/users', async () => {

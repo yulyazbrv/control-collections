@@ -1,10 +1,10 @@
 import { Flex, Input, PasswordInput, Button, Title } from "@mantine/core";
 import { useState } from "react";
 import { IconAt } from "@tabler/icons-react";
-import { loginUser } from "../../api/login";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserEmail } from "../../redux/slices/userSlice";
+import { loginUser } from "../../api/authApi/login";
 
 const Login = (props) => {
   const { setAuth } = props;

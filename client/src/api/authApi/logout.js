@@ -1,4 +1,4 @@
-import { postHelper } from "../helpers/apiHelper";
+import { postHelper } from "../../helpers/apiHelper";
 
 export const logoutUser = async () => {
   try {

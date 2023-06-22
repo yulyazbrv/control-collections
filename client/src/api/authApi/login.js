@@ -1,4 +1,4 @@
-import { postHelper } from "../helpers/apiHelper";
+import { postHelper } from "../../helpers/apiHelper";
 
 export const loginUser = async (email, password) => {
   const response = await postHelper("/login", { email, password });

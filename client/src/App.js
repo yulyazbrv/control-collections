@@ -7,8 +7,8 @@ import { Registration } from "./pages/Registration";
 import { UserPage } from "./pages/UserPage";
 import { AppShell, Header, MantineProvider } from "@mantine/core";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { checkAuth } from "./api/checkAuth";
-import { logoutUser } from "./api/logout";
+import { checkAuth } from "./api/authApi/checkAuth";
+import { logoutUser } from "./api/authApi/logout";
 
 function App() {
   const [auth, setAuth] = useState();

@@ -1,7 +1,7 @@
 import { Button, Flex, Input, PasswordInput, Title } from "@mantine/core";
 import { useState } from "react";
 import { IconAt } from "@tabler/icons-react";
-import { registrateUser } from "../../api/registration";
+import { registrateUser } from "../../api/authApi/registration";
 
 const Registration = () => {
   const [name, setName] = useState("");

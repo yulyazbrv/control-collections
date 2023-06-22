@@ -1,4 +1,4 @@
-import { getHelper } from "../helpers/apiHelper";
+import { getHelper } from "../../helpers/apiHelper";
 
 export const getUsers = async () => {
   const response = await getHelper("/users");

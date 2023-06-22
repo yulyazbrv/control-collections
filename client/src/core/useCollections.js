@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query';
-import { getCollections } from '../api/collections';
+import { getUserCollections } from '../api/collectionApi/userCollections';
 
 export const useCollections = () => {
   return useQuery('/getCollections', async () => {
-    const collections = await getCollections();
+    const collections = await getUserCollections();
     return collections;
   });
 };

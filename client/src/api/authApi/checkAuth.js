@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "../helpers/apiHelper";
+import { API_URL } from "../../helpers/apiHelper";
 
 export const checkAuth = async () => {
   try {
