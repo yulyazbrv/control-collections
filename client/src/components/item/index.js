@@ -23,20 +23,21 @@ const Item = (props) => {
               Update
             </Button>
           </Flex>
-          <Flex direction={"column"}>
+          <Flex direction={"row"} justify={"space-between"} gap={5}>
             <Title lh={1.2} order={5}>
-              {item.tags ? (
+              {item.tags.length ? (
                 item.tags.map((tag) => (
-                  <span style={{ fontWeight: "350" }}>{tag.name}</span>
+                  <span style={{ fontWeight: "350", color: "red" }}>{tag} </span>
                 ))
               ) : (
                 <span style={{ fontWeight: "350" }}>no tags</span>
               )}
             </Title>
-            <Flex direction={"row"}>
+            <Flex direction={"row"} gap={7} >
               <IconMessageDots></IconMessageDots>
+              <span style={{ fontWeight: "350" }}>{item.comments.length}</span>
               <IconHeart></IconHeart>
-              <span style={{ fontWeight: "350" }}>{item.likes}</span>
+              <span style={{ fontWeight: "350" }}>{item.likes.length}</span>
             </Flex>
           </Flex>
         </Flex>

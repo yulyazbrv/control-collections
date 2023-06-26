@@ -1,18 +1,21 @@
 import { Drawer, Button, Flex, Title, Input } from "@mantine/core";
 import { useState } from "react";
-import { addCollection } from "../../api/collectionApi/addCollection";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { addItem } from "../../api/itemApi/addItem";
 
-function CreateCollection(props) {
+function CreateItem(props) {
   const { opened, close } = props;
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [theme, setTheme] = useState("");
+  const [tags, setTags] = useState("");
   const [result, setResult] = useState("");
-  const email = useSelector((state) => state.user.email);
+  const collection = useSelector((state) => state.collection.collection);
   const createClick = async () => {
     try {
-      await addCollection(email, name, description, theme);
+      if (tags) {
+        await addItem(collection._id, name, tags);
+      } else {
+        await addItem(collection._id, name);
+      }
       close();
     } catch (e) {
       setResult(e.message);
@@ -42,14 +45,9 @@ function CreateCollection(props) {
               onChange={(e) => setName(e.target.value)}
             />
             <Input
-              placeholder="Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-            <Input
-              placeholder="Theme"
-              value={theme}
-              onChange={(e) => setTheme(e.target.value)}
+              placeholder="#super #love #book"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
             />
             <Button color="red" radius="lg" uppercase onClick={createClick}>
               Create
@@ -62,4 +60,4 @@ function CreateCollection(props) {
   );
 }
 
-export { CreateCollection };
+export { CreateItem };

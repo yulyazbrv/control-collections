@@ -3,7 +3,7 @@ import { getCollectionItems } from "../api/itemApi/collectionItems";
 
 export const useCollectionItems = (id) => {
   return useQuery(
-    "/getUserCollections",
+    "/getCollectionItems",
     async () => {
       const items = await getCollectionItems(id);
       return items;

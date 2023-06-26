@@ -80,5 +80,11 @@ router.get(
   authMiddleware,
   collectionController.getUserCollections
 );
+router.get("/getItems", authMiddleware, itemController.getAllItems);
+router.get(
+  "/getCollectionItems",
+  authMiddleware,
+  itemController.getCollectionItems
+);
 
 module.exports = router;

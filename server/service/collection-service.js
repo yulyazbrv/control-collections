@@ -40,24 +40,27 @@ class CollectionService {
     if (!collection) {
       throw new Error(`Collection with id ${id} isnot exists`);
     }
+    console.log(`data ${name} ${description} ${theme}`)
     const filter = { _id: id };
     const updateDoc = {
       $set: {
-        name: name ? name : collection.name,
-        description: description ? description : collection.description,
-        theme: theme ? theme : collection.theme,
+        name: name,
+        description: description,
+        theme: theme,
       },
     };
     const options = { upsert: true };
-    const updateCollection = await collectionModel
-      .updateOne({ filter, updateDoc, options })
-      .then(() => {
-        console.log("Collection update succesfully");
-        return updateCollection;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    const updatedCollection = await collectionModel.updateOne(
+      filter,
+      updateDoc,
+      options
+    );
+    if (updatedCollection) {
+      console.log("Collection update succesfully");
+      return updatedCollection;
+    } else {
+      throw new Error("Collection didnt update");
+    }
   }
 
   async getAllCollections() {

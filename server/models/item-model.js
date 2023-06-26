@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const ItemSchema = new Schema({ 
+const ItemSchema = new Schema({
   itemCollection: {
     type: Schema.Types.ObjectId,
     ref: "ItemCollection",
@@ -21,12 +21,7 @@ const ItemSchema = new Schema({
       ref: "Comment",
     },
   ],
-  tags: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Tag",
-    },
-  ],
+  tags: [String],
 });
 
 module.exports = model("Item", ItemSchema);

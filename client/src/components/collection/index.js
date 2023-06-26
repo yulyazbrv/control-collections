@@ -4,12 +4,16 @@ import { useDisclosure } from "@mantine/hooks";
 import "./style.css";
 import { UpdateCollection } from "../updateCollection";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCollection } from "../../redux/slices/collectionSlice";
 
 const Collection = (props) => {
   const { collection } = props;
   const [opened, { open, close }] = useDisclosure(false);
   const navigate = useNavigate()
+  const dispatch = useDispatch();
   const openItem = () => {
+    dispatch(setCollection(collection));
     navigate(`/collection`, {replace: true})
   }
   return (
