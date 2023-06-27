@@ -14,7 +14,7 @@ const CommentSchema = new Schema({
     required: true,
   },
   creation_date: {
-    type: Date,
+    type: String,
   },
 });
 

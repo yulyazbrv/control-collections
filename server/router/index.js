@@ -70,6 +70,7 @@ router.delete(
   collectionController.removeCollection
 );
 router.post("/addComment", authMiddleware, commentController.addComment);
+router.get("/getComments", authMiddleware, commentController.getComments);
 router.get(
   "/getCollections",
   authMiddleware,
