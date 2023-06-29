@@ -1,13 +1,15 @@
 import { Button, Flex, Textarea, Title } from "@mantine/core";
 import { useComments } from "../../core/useComments";
 import { Comment } from "./components/comment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addComment } from "../../api/commentApi/addComment";
 import { useSelector } from "react-redux";
 import "./style.css";
 
 const Comments = (props) => {
   const { item } = props;
+  console.log("id ", item._id)
+
   const { data: comments, isFetching: isLoading } = useComments(item._id);
   const [result, setResult] = useState("");
   const [textComment, setTextComment] = useState("");
@@ -16,6 +18,7 @@ const Comments = (props) => {
     try {
       await addComment(email, item._id, textComment);
       setTextComment("");
+      setResult("Succesfully");
     } catch (e) {
       setResult(e.message);
     }

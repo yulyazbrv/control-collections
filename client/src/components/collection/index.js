@@ -8,17 +8,34 @@ import { useDispatch } from "react-redux";
 import { setCollection } from "../../redux/slices/collectionSlice";
 
 const Collection = (props) => {
-  const { collection } = props;
+  const { collection, email } = props;
   const [opened, { open, close }] = useDisclosure(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const openItem = () => {
     dispatch(setCollection(collection));
-    navigate(`/collection`, {replace: true})
-  }
+    navigate(`/collection`, { replace: true });
+  };
+  console.log("email ", email)
+  console.log("email! ", collection.user.email)
+
+  const isCreator = () => email === collection.user.email;
+
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder w={"100%"} className="collection-wrapper" onClick={openItem}>
-      <UpdateCollection opened={opened} close={close} collection={collection}></UpdateCollection>
+    <Card
+      shadow="sm"
+      padding="lg"
+      radius="md"
+      withBorder
+      w={"100%"}
+      className="collection-wrapper"
+      onClick={openItem}
+    >
+      <UpdateCollection
+        opened={opened}
+        close={close}
+        collection={collection}
+      ></UpdateCollection>
       <Flex>
         <Flex>
           <Image></Image>
@@ -26,9 +43,11 @@ const Collection = (props) => {
         <Flex direction={"column"} gap={7} justify={"center"} w={"100%"}>
           <Flex align={"center"} justify={"space-between"} w={"100%"}>
             <Title order={3}>{collection.name}</Title>
-            <Button color="red" radius="lg" uppercase w={100} onClick={open}>
-              Update
-            </Button>
+            {isCreator() && (
+              <Button color="red" radius="lg" uppercase w={100} onClick={open}>
+                Update
+              </Button>
+            )}
           </Flex>
           <Flex direction={"column"}>
             <ReactMarkdown className="markdown-text">

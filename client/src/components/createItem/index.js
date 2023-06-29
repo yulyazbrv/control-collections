@@ -27,7 +27,7 @@ function CreateItem(props) {
       <Drawer
         opened={opened}
         onClose={close}
-        title="Create Collection"
+        title="Create item"
         overlayProps={{ opacity: 0.5, blur: 4 }}
       >
         <Flex align={"center"} justify={"center"}>
@@ -38,7 +38,7 @@ function CreateItem(props) {
             w={400}
             h={500}
           >
-            <Title order={2}>Create collection</Title>
+            <Title order={2}>Create item</Title>
             <Input
               placeholder="Name"
               value={name}

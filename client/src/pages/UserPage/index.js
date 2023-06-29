@@ -59,7 +59,7 @@ const UserPage = (props) => {
             <LoadingOverlay visible={isLoading} overlayBlur={2} />
             {collections
               ? collections.map((collection, index) => (
-                  <Collection key={index} collection={collection}></Collection>
+                  <Collection key={index} collection={collection} email={email}></Collection>
                 ))
               : []}
           </Flex>

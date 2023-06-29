@@ -64,7 +64,7 @@ class CollectionService {
   }
 
   async getAllCollections() {
-    const collections = await collectionModel.find();
+    const collections = await collectionModel.find().populate("user");
     return collections;
   }
 
@@ -73,7 +73,7 @@ class CollectionService {
     if (!candidate) {
       throw new Error(`User with ${email} does not exist`);
     }
-    const collections = await collectionModel.find({ user: candidate._id });
+    const collections = await collectionModel.find({ user: candidate._id }).populate("user");
     return collections;
   }
 }

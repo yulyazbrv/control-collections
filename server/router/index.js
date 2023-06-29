@@ -51,6 +51,8 @@ router.put(
 router.post("/addTag", authMiddleware, tagController.addNewTag);
 router.delete("/deleteTag", authMiddleware, tagController.deleteTag);
 router.post("/addLike", authMiddleware, likeController.addLike);
+router.delete("/removeLike", authMiddleware, likeController.removeLike);
+router.get("/checkLike", authMiddleware, likeController.checkLike);
 router.post("/addItem", authMiddleware, itemController.addItem);
 router.put("/updateItem", authMiddleware, itemController.updateItem);
 router.delete("/deleteItem", authMiddleware, itemController.removeItem);
@@ -73,7 +75,6 @@ router.post("/addComment", authMiddleware, commentController.addComment);
 router.get("/getComments", authMiddleware, commentController.getComments);
 router.get(
   "/getCollections",
-  authMiddleware,
   collectionController.getCollections
 );
 router.get(

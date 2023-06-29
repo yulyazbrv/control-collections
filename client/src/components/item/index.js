@@ -1,13 +1,46 @@
 import { Button, Card, Flex, Title } from "@mantine/core";
-import { IconHeart, IconMessageDots } from "@tabler/icons-react";
-import { useState } from "react";
+import {
+  IconHeart,
+  IconHeartFilled,
+  IconMessageDots,
+} from "@tabler/icons-react";
+import { useEffect, useState } from "react";
 import { Comments } from "../comments";
+import { addLike } from "../../api/likeApi/addLike";
+import { useSelector } from "react-redux";
+import { checkLike } from "../../api/likeApi/checkLike";
+import { removeLike } from "../../api/likeApi/removeLike";
 
 const Item = (props) => {
   const { item } = props;
   // const [opened, { open, close }] = useDisclosure(false);
   const [showComments, setShowComments] = useState(false);
+  const [hasLiked, setHasLiked] = useState(false);
+  const email = useSelector((state) => state.user.email);
+  useEffect(() => {
+    const checkUserLike = async () => {
+      const userHasLiked = await checkLike(email, item._id);
+      setHasLiked(userHasLiked);
+    };
 
+    checkUserLike();
+  }, [email, item._idid]);
+  const sendLike = async () => {
+    try {
+      setHasLiked(true);
+      await addLike(email, item._id);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+  const deleteLike = async () => {
+    try {
+      await removeLike(email, item._id);
+      setHasLiked(false);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
   return (
     <Card
       shadow="sm"
@@ -45,7 +78,11 @@ const Item = (props) => {
                 }}
               ></IconMessageDots>
               <span style={{ fontWeight: "350" }}>{item.comments.length}</span>
-              <IconHeart></IconHeart>
+              {!hasLiked ? (
+                <IconHeart onClick={sendLike}></IconHeart>
+              ) : (
+                <IconHeartFilled onClick={deleteLike}></IconHeartFilled>
+              )}
               <span style={{ fontWeight: "350" }}>{item.likes.length}</span>
             </Flex>
           </Flex>

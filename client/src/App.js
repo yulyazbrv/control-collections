@@ -7,10 +7,11 @@ import { Registration } from "./pages/Registration";
 import { UserPage } from "./pages/UserPage";
 import { AppShell, Header, MantineProvider } from "@mantine/core";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import jwtDecode from 'jwt-decode';
+import jwtDecode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { setUserEmail } from "./redux/slices/userSlice";
 import { CollectionPage } from "./pages/CollectionPage";
+import { HomePage } from "./pages/HomePage";
 function decodeToken(token) {
   try {
     const decodedToken = jwtDecode(token);
@@ -24,13 +25,13 @@ function decodeToken(token) {
 function App() {
   const [auth, setAuth] = useState();
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      const email = decodeToken(token)
-      dispatch(setUserEmail(email))
+      const email = decodeToken(token);
+      dispatch(setUserEmail(email));
     } else {
       navigate(`/`);
     }
@@ -60,10 +61,10 @@ function App() {
         })}
       >
         <Routes>
-          {/* <Route path="/" element={<Home />}></Route> */}
+          <Route path="/" element={<HomePage auth={auth}/>}></Route>
           <Route path="/registration" element={<Registration />}></Route>
           <Route path="/login" element={<Login setAuth={setAuth} />}></Route>
-          <Route path="/home"></Route>
+          <Route path="/home" element={<HomePage auth={auth}/>}></Route>
           <Route path="/adminPanel" element={<AdminPanel />}></Route>
           <Route
             path="/user"
