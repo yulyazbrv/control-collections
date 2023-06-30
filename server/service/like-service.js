@@ -46,14 +46,9 @@ class LikeService {
   async checkLike(email, id){
     const candidate = await userModel.findOne({ email });
     if (!candidate) {
-      throw new Error(`User with ${email} isnot exists`);
+      return false
     }
-
-    // const item = await itemModel.findOne({_id: id});
-    // if (!item) {
-    //   throw new Error(`Item with id ${id} doesnt exists`);
-    // }
-
+    
     const like = await likeModel.findOne({item: id, user: candidate._id})
     if(like){
       return true

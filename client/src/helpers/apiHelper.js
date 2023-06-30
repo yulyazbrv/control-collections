@@ -13,7 +13,6 @@ axiosInstance.interceptors.request.use((config) => {
 });
 
 export const getHelper = (query, params) => {
-  console.log("params ", params);
   return axiosInstance
     .get(`${query}`)
     .then((response) => {

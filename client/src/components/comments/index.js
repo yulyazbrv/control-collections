@@ -8,9 +8,8 @@ import "./style.css";
 
 const Comments = (props) => {
   const { item } = props;
-  console.log("id ", item._id)
 
-  const { data: comments, isFetching: isLoading } = useComments(item._id);
+  const { data: comments, isLoading, refetch } = useComments(item._id);
   const [result, setResult] = useState("");
   const [textComment, setTextComment] = useState("");
   const email = useSelector((state) => state.user.email);
@@ -19,10 +18,12 @@ const Comments = (props) => {
       await addComment(email, item._id, textComment);
       setTextComment("");
       setResult("Succesfully");
+      refetch();
     } catch (e) {
       setResult(e.message);
     }
   };
+
   return (
     <Flex
       direction={"column"}

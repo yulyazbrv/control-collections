@@ -12,11 +12,11 @@ import { checkLike } from "../../api/likeApi/checkLike";
 import { removeLike } from "../../api/likeApi/removeLike";
 
 const Item = (props) => {
-  const { item } = props;
+  const { item, isCreator } = props;
   // const [opened, { open, close }] = useDisclosure(false);
   const [showComments, setShowComments] = useState(false);
   const [hasLiked, setHasLiked] = useState(false);
-  const email = useSelector((state) => state.user.email);
+  const email = useSelector((state) => state.user.email) || "";
   useEffect(() => {
     const checkUserLike = async () => {
       const userHasLiked = await checkLike(email, item._id);
@@ -24,7 +24,7 @@ const Item = (props) => {
     };
 
     checkUserLike();
-  }, [email, item._idid]);
+  }, [email, item._id]);
   const sendLike = async () => {
     try {
       setHasLiked(true);
@@ -55,15 +55,17 @@ const Item = (props) => {
         <Flex direction={"column"} gap={7} justify={"center"} w={"100%"}>
           <Flex align={"center"} justify={"space-between"} w={"100%"}>
             <Title order={3}>{item.name}</Title>
-            <Button color="red" radius="lg" uppercase w={100}>
-              Update
-            </Button>
+            {isCreator() && (
+              <Button color="red" radius="lg" uppercase w={100}>
+                Update
+              </Button>
+            )}
           </Flex>
           <Flex direction={"row"} justify={"space-between"} gap={5}>
             <Title lh={1.2} order={5}>
               {item.tags.length ? (
-                item.tags.map((tag) => (
-                  <span style={{ fontWeight: "350", color: "red" }}>
+                item.tags.map((tag, index) => (
+                  <span key={index} style={{ fontWeight: "350", color: "red" }}>
                     {tag}{" "}
                   </span>
                 ))

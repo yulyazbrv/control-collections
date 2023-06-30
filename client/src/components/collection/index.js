@@ -16,8 +16,6 @@ const Collection = (props) => {
     dispatch(setCollection(collection));
     navigate(`/collection`, { replace: true });
   };
-  console.log("email ", email)
-  console.log("email! ", collection.user.email)
 
   const isCreator = () => email === collection.user.email;
 

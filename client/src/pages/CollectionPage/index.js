@@ -40,9 +40,9 @@ const CollectionPage = (props) => {
             <IconFileDescription radius="xl" />
           </Flex>
         </Flex>
-        <Flex direction={"column"} gap={10}>
+        <Flex direction={"column"} gap={10} align={"center"}>
           {items ? (
-            items.map((item, index) => <Item key={index} item={item}></Item>)
+            items.map((item, index) => <Item key={index} item={item} isCreator={isCreator}></Item>)
           ) : (
             <Flex direction={"column"} w={"250px"} mt={110}>
               <LoadingOverlay visible={isLoading} overlayBlur={2} />
