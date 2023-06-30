@@ -4,8 +4,7 @@ import { Collection } from "../../components/collection";
 import emptyIcon from "./assets/nothing.png";
 import { useSelector } from "react-redux";
 
-const HomePage = (props) => {
-  const { auth } = props;
+const HomePage = () => {
   const { data: collections, isFetching: isLoading } = useCollections();
   const email = useSelector((state) => state.user.email) || "";
 

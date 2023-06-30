@@ -7,8 +7,7 @@ import { Item } from "../../components/item";
 import { CreateItem } from "../../components/createItem";
 import { useDisclosure } from "@mantine/hooks";
 
-const CollectionPage = (props) => {
-  const { auth } = props;
+const CollectionPage = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const collection = useSelector((state) => state.collection.collection);
   const email = useSelector((state) => state.user.email);

@@ -1,6 +1,5 @@
 import { useQuery } from "react-query";
 import { getComments } from "../api/commentApi/comments";
-import { useEffect } from "react";
 
 export const useComments = (id) => {
   const queryKey = ["getComments", id];

@@ -1,14 +1,15 @@
-import { Flex } from "@mantine/core";
+import { Flex, Input } from "@mantine/core";
 import { Link, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import "./style.css";
+import { IconSearch } from "@tabler/icons-react";
 
 const HeaderContent = (props) => {
   const { auth } = props;
   const { pathname } = useLocation();
   return (
     <Flex align={"center"} mih={50} justify={"center"}>
-      <Flex gap={60}>
+      <Flex gap={60} align={"center"}>
         <Link
           to="/home"
           className={classNames("link", pathname === "/home" && "active")}
@@ -21,6 +22,12 @@ const HeaderContent = (props) => {
         >
           USER
         </Link>
+        <Input
+          icon={<IconSearch />}
+          placeholder="Search"
+          radius="lg"
+          variant="filled"
+        />
         {auth ? (
           <></>
         ) : (

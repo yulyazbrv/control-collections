@@ -1,7 +1,7 @@
-import { Button, Flex, Textarea, Title } from "@mantine/core";
+import { Button, Flex, Loader, Textarea, Title } from "@mantine/core";
 import { useComments } from "../../core/useComments";
 import { Comment } from "./components/comment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { addComment } from "../../api/commentApi/addComment";
 import { useSelector } from "react-redux";
 import "./style.css";
@@ -32,6 +32,7 @@ const Comments = (props) => {
       w={"100%"}
       className="comments-wrapper"
     >
+      {isLoading && <Loader></Loader>}
       {comments ? (
         comments.map((comment, index) => (
           <Comment key={index} comment={comment}></Comment>

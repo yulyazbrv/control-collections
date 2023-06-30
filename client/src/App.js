@@ -61,7 +61,7 @@ function App() {
         })}
       >
         <Routes>
-          <Route path="/" element={<HomePage auth={auth}/>}></Route>
+          <Route path="/" element={<HomePage/>}></Route>
           <Route path="/registration" element={<Registration />}></Route>
           <Route path="/login" element={<Login setAuth={setAuth} />}></Route>
           <Route path="/home" element={<HomePage auth={auth}/>}></Route>
@@ -72,7 +72,7 @@ function App() {
           ></Route>
           <Route
             path="/collection"
-            element={<CollectionPage auth={auth} setAuth={setAuth} />}
+            element={<CollectionPage  />}
           ></Route>
         </Routes>
       </AppShell>
