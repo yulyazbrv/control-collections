@@ -40,9 +40,7 @@ class UserService {
     const userDto = new UserDto(candidate);
     const tokens = tokenService.generateTokens({ ...userDto });
     const res = await tokenService.saveToken(userDto.id, tokens.refreshToken);
-    console.log("Сохраненный токен в бд:", res);
     const t = await tokenModel.find();
-    console.log("Все токены при логине:", t);
     return { ...tokens, candidate: userDto };
   }
 
@@ -56,9 +54,7 @@ class UserService {
       if (!refreshToken) {
         throw new Error("Token Error1");
       }
-      console.log("поступивший рефреш:", refreshToken);
       const t = await tokenModel.find();
-      console.log("Все токены при рефреше:", t);
       const userData = tokenService.validateRefreshToken(refreshToken);
       const tokenFromDb = await tokenModel.findOne({
         refreshToken: refreshToken,
@@ -75,7 +71,6 @@ class UserService {
       const userDto = new UserDto(user);
       const tokens = tokenService.generateTokens({ ...userDto });
       const r = await tokenService.saveToken(userDto.id, tokens.refreshToken);
-      console.log("сохраненный токен в рефреше:", r);
 
       return { ...tokens, user: userDto };
     } catch (error) {

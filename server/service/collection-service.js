@@ -40,7 +40,6 @@ class CollectionService {
     if (!collection) {
       throw new Error(`Collection with id ${id} isnot exists`);
     }
-    console.log(`data ${name} ${description} ${theme}`)
     const filter = { _id: id };
     const updateDoc = {
       $set: {

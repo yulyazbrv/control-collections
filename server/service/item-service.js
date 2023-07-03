@@ -9,15 +9,18 @@ class ItemService {
       throw new Error(`Collection with id ${idCollection} isnot exists`);
     }
 
+    const item = await itemModel.create({
+      itemCollection: idCollection,
+      name: name,
+      tags: tagsArray ? tagsArray : [],
+    });
+
     const tagsArray = tags.split(" ").filter((tag) => tag.startsWith("#"));
     if (tagsArray.length) {
       const createTags = async () => {
         try {
           for (const tag of tagsArray) {
-            const existingTag = await tagModel.findOne({ name: tag });
-            if (!existingTag) {
-              await tagModel.create({ name: tag });
-            }
+            await tagModel.create({ name: tag, item: item._id });
           }
         } catch (e) {
           console.error(e.message);
@@ -26,13 +29,6 @@ class ItemService {
 
       createTags();
     }
-
-    const item = await itemModel.create({
-      itemCollection: idCollection,
-      name: name,
-      tags: tagsArray ? tagsArray : [],
-    });
-    
     collection.items.push(item);
     await collection.save();
     return item;
@@ -80,7 +76,24 @@ class ItemService {
   }
 
   async getAllItems() {
-    const items = await itemModel.find();
+    const items = await itemModel.find().populate({
+      path: "itemCollection",
+      populate: {
+        path: "user",
+        model: "User",
+      },
+    });
+    return items;
+  }
+
+  async getItemsByTag(tag) {
+    const items = await itemModel.find({ tags: { $in: [tag] } }).populate({
+      path: "itemCollection",
+      populate: {
+        path: "user",
+        model: "User",
+      },
+    });
     return items;
   }
 
@@ -89,7 +102,15 @@ class ItemService {
     if (!collection) {
       throw new Error(`Collection with ${id} does not exist`);
     }
-    const items = await itemModel.find({ itemCollection: collection._id });
+    const items = await itemModel
+      .find({ itemCollection: collection._id })
+      .populate({
+        path: "itemCollection",
+        populate: {
+          path: "user",
+          model: "User",
+        },
+      });
     return items;
   }
 }

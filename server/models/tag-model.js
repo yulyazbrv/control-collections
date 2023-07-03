@@ -5,6 +5,12 @@ const TagSchema = new Schema({
     type: String,
     required: true,
   },
+  item: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Item",
+    },
+  ],
 });
 
 module.exports = model("Tag", TagSchema);

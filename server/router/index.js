@@ -49,6 +49,7 @@ router.put(
   userController.deleteAdmin
 );
 router.post("/addTag", authMiddleware, tagController.addNewTag);
+router.get("/getTags", tagController.getTags);
 router.delete("/deleteTag", authMiddleware, tagController.deleteTag);
 router.post("/addLike", authMiddleware, likeController.addLike);
 router.delete("/removeLike", authMiddleware, likeController.removeLike);
@@ -73,19 +74,14 @@ router.delete(
 );
 router.post("/addComment", authMiddleware, commentController.addComment);
 router.get("/getComments", commentController.getComments);
-router.get(
-  "/getCollections",
-  collectionController.getCollections
-);
+router.get("/getCollections", collectionController.getCollections);
 router.get(
   "/getUserCollections",
   authMiddleware,
   collectionController.getUserCollections
 );
-router.get("/getItems", authMiddleware, itemController.getAllItems);
-router.get(
-  "/getCollectionItems",
-  itemController.getCollectionItems
-);
+router.get("/getItems", itemController.getAllItems);
+router.get("/getItemsByTag", itemController.getItemsByTag);
+router.get("/getCollectionItems", itemController.getCollectionItems);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import { Button, Card, Flex, Title } from "@mantine/core";
+import { Button, Card, Flex, Text, Title } from "@mantine/core";
 import {
   IconHeart,
   IconHeartFilled,
@@ -10,13 +10,23 @@ import { addLike } from "../../api/likeApi/addLike";
 import { useSelector } from "react-redux";
 import { checkLike } from "../../api/likeApi/checkLike";
 import { removeLike } from "../../api/likeApi/removeLike";
+import { useNavigate } from "react-router-dom";
 
 const Item = (props) => {
-  const { item, isCreator } = props;
+  const { item } = props;
   // const [opened, { open, close }] = useDisclosure(false);
   const [showComments, setShowComments] = useState(false);
   const [hasLiked, setHasLiked] = useState(false);
   const email = useSelector((state) => state.user.email) || "";
+  const navigate = useNavigate()
+
+  const isCreator = () => {
+    if (item.collection && item.itemCollection.user) {
+      return email === item.itemCollection.user.email;
+    }
+    return false;
+  };
+
   useEffect(() => {
     const checkUserLike = async () => {
       const userHasLiked = await checkLike(email, item._id);
@@ -31,6 +41,7 @@ const Item = (props) => {
       await addLike(email, item._id);
     } catch (e) {
       console.log(e.message);
+      navigate(`/login`, { replace: true });
     }
   };
   const deleteLike = async () => {
@@ -55,13 +66,15 @@ const Item = (props) => {
         <Flex direction={"column"} gap={7} justify={"center"} w={"100%"}>
           <Flex align={"center"} justify={"space-between"} w={"100%"}>
             <Title order={3}>{item.name}</Title>
+            <Text >Author:{item.itemCollection.user.email}</Text>
             {isCreator() && (
               <Button color="red" radius="lg" uppercase w={100}>
                 Update
               </Button>
             )}
           </Flex>
-          <Flex direction={"row"} justify={"space-between"} gap={5}>
+          <Flex direction={"row"} justify={"space-between"} gap={5} align={"center"}>
+            <Text >Collection:{item.itemCollection.name}</Text>
             <Title lh={1.2} order={5}>
               {item.tags.length ? (
                 item.tags.map((tag, index) => (

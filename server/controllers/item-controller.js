@@ -3,8 +3,8 @@ const itemService = require("../service/item-service");
 class ItemController {
   async addItem(req, res, next) {
     try {
-      const {itemCollection, name, tags } = req.body;
-      const item = await itemService.addItem(itemCollection, name, tags );
+      const { itemCollection, name, tags } = req.body;
+      const item = await itemService.addItem(itemCollection, name, tags);
       return res.json(item);
     } catch (e) {
       next(e);
@@ -34,6 +34,16 @@ class ItemController {
   async getAllItems(req, res, next) {
     try {
       const items = await itemService.getAllItems();
+      return res.json(items);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async getItemsByTag(req, res, next) {
+    try {
+      const { tag } = req.query;
+      const items = await itemService.getItemsByTag(decodeURIComponent(tag));
       return res.json(items);
     } catch (e) {
       next(e);

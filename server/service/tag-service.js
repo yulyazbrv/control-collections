@@ -2,19 +2,19 @@ const itemModel = require("../models/item-model");
 const tagModel = require("../models/tag-model");
 
 class TagService {
-  async addTag(nameItem, tag) {
-    const item = itemModel.findOne(nameItem);
-    if (!item) {
-      throw new Error(`Item with name ${nameItem} isnot exists`);
-    }
-    const tagObj = await tagModel.findOne({ name: tag });
-    if (!tagObj) {
-      tagObj = await tagModel.create({ item: item._id, name: tag });
-    }
-    item.tags.push(tag);
-    await item.save();
-    return item;
-  }
+  // async addTag(nameItem, tag) {
+  //   const item = itemModel.findOne(nameItem);
+  //   if (!item) {
+  //     throw new Error(`Item with name ${nameItem} isnot exists`);
+  //   }
+  //   const tagObj = await tagModel.findOne({ name: tag });
+  //   if (!tagObj) {
+  //     tagObj = await tagModel.create({ item: item._id, name: tag });
+  //   }
+  //   item.tags.push(tag);
+  //   await item.save();
+  //   return item;
+  // }
 
   async removeTag(nameItem, tag) {
     //хз как со связями при удалении тега
@@ -30,6 +30,11 @@ class TagService {
     item.tags.splice(index, 1);
     await item.save();
     return item;
+  }
+
+  async getTags() {
+    const tags = await tagModel.find().populate("item");
+    return tags;
   }
 }
 
