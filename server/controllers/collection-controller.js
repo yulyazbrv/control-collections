@@ -50,6 +50,16 @@ class CollectionController {
     }
   }
 
+  async getCollectionById(req, res, next) {
+    try {
+      const { id } = req.query;
+      const collection = await collectionService.getCollectionById(id);
+      return res.json(collection);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   async getUserCollections(req, res, next) {
     try {
       const { email } = req.query;

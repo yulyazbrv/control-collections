@@ -4,7 +4,7 @@ import { addCollection } from "../../api/collectionApi/addCollection";
 import {  useSelector } from "react-redux";
 
 function CreateCollection(props) {
-  const { opened, close } = props;
+  const { opened, close, refetch } = props;
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [theme, setTheme] = useState("");
@@ -14,6 +14,7 @@ function CreateCollection(props) {
     try {
       await addCollection(email, name, description, theme);
       close();
+      refetch()
     } catch (e) {
       setResult(e.message);
     }

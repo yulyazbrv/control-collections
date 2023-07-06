@@ -75,6 +75,7 @@ router.delete(
 router.post("/addComment", authMiddleware, commentController.addComment);
 router.get("/getComments", commentController.getComments);
 router.get("/getCollections", collectionController.getCollections);
+router.get("/getCollectionById", collectionController.getCollectionById);
 router.get(
   "/getUserCollections",
   authMiddleware,

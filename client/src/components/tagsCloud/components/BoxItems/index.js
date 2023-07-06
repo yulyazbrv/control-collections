@@ -1,5 +1,5 @@
 import { Card, Flex, Loader, LoadingOverlay } from "@mantine/core";
-import { IconCross, IconX } from "@tabler/icons-react";
+import { IconCross, IconX, IconZoomCancel } from "@tabler/icons-react";
 import { useItemsByTag } from "../../../../core/useItemsByTag";
 import { Item } from "../../../item";
 import { useSelector } from "react-redux";
@@ -17,8 +17,13 @@ const BoxItems = (props) => {
         <Flex w={"100%"} direction={"row"} justify={"flex-end"}>
           <IconX onClick={() => setBoxItems(false)}></IconX>
         </Flex>
-        {items &&
-          items.map((item, index) => <Item key={index} item={item}></Item>)}
+        {items.length !== 0 ? (
+          items.map((item, index) => <Item key={index} item={item}></Item>)
+        ) : (
+          <Flex>
+            <IconZoomCancel></IconZoomCancel>
+          </Flex>
+        )}
       </Flex>
     </Card>
   );

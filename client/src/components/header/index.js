@@ -3,10 +3,15 @@ import { Link, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import "./style.css";
 import { IconSearch } from "@tabler/icons-react";
+import { ActionIcon, useMantineColorScheme } from '@mantine/core';
+import { IconSun, IconMoonStars } from '@tabler/icons-react';
 
 const HeaderContent = (props) => {
   const { auth } = props;
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const { pathname } = useLocation();
+  const dark = colorScheme === 'dark';
+
   return (
     <Flex align={"center"} mih={50} justify={"center"}>
       <Flex gap={60} align={"center"}>
@@ -50,6 +55,14 @@ const HeaderContent = (props) => {
             </Link>
           </>
         )}
+        <ActionIcon
+          variant="outline"
+          color={dark ? "yellow" : "red"}
+          onClick={() => toggleColorScheme()}
+          title="Toggle color scheme"
+        >
+          {dark ? <IconSun size="1.1rem" /> : <IconMoonStars size="1.1rem" />}
+        </ActionIcon>
       </Flex>
     </Flex>
   );

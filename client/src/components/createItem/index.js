@@ -1,13 +1,22 @@
-import { Drawer, Button, Flex, Title, Input } from "@mantine/core";
+import {
+  Drawer,
+  Button,
+  Flex,
+  Title,
+  Input,
+  Autocomplete,
+} from "@mantine/core";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { addItem } from "../../api/itemApi/addItem";
+import { useTags } from "../../core/useTags";
 
 function CreateItem(props) {
-  const { opened, close } = props;
+  const { opened, close, refetch } = props;
   const [name, setName] = useState("");
   const [tags, setTags] = useState("");
   const [result, setResult] = useState("");
+  const { data: tagsData } = useTags();
   const collection = useSelector((state) => state.collection.collection);
   const createClick = async () => {
     try {
@@ -17,6 +26,7 @@ function CreateItem(props) {
         await addItem(collection._id, name);
       }
       close();
+      refetch();
     } catch (e) {
       setResult(e.message);
     }
@@ -44,11 +54,24 @@ function CreateItem(props) {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <Input
+            <Autocomplete
+              value={tags}
+              onChange={setTags}
+              placeholder="#super #love #book"
+              data={
+                tagsData
+                  ? tagsData.map((tag, index) => ({
+                      value: tag.name,
+                      key: index,
+                    }))
+                  : []
+              }
+            />
+            {/* <Input
               placeholder="#super #love #book"
               value={tags}
               onChange={(e) => setTags(e.target.value)}
-            />
+            /> */}
             <Button color="red" radius="lg" uppercase onClick={createClick}>
               Create
             </Button>

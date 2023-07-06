@@ -9,13 +9,13 @@ class ItemService {
       throw new Error(`Collection with id ${idCollection} isnot exists`);
     }
 
+    const tagsArray = tags.split(" ").filter((tag) => tag.startsWith("#"));
     const item = await itemModel.create({
       itemCollection: idCollection,
       name: name,
       tags: tagsArray ? tagsArray : [],
     });
 
-    const tagsArray = tags.split(" ").filter((tag) => tag.startsWith("#"));
     if (tagsArray.length) {
       const createTags = async () => {
         try {
@@ -29,6 +29,7 @@ class ItemService {
 
       createTags();
     }
+
     collection.items.push(item);
     await collection.save();
     return item;
@@ -40,15 +41,9 @@ class ItemService {
       throw new Error(`Item with id ${id} isnot exists`);
     }
 
-    const deletedItem = await collectionModel
-      .deleteOne({ _id: id })
-      .then(() => {
-        console.log("Item deleted succesfully");
-        return deletedItem;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    const deletedItem = await itemModel.deleteOne({ _id: id });
+    console.log(deletedItem)
+    return deletedItem;
   }
 
   async updateItem(id, name, tags) {
@@ -59,20 +54,18 @@ class ItemService {
     const filter = { _id: id };
     const updateDoc = {
       $set: {
-        name: name ? name : item.name,
-        tags: tags ? tags : item.tags,
+        name: name,
+        tags: tags,
       },
     };
     const options = { upsert: true };
-    const updatedItem = await itemModel
-      .updateOne({ filter, updateDoc, options })
-      .then(() => {
-        console.log("Item update succesfully");
-        return updatedItem;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    const updatedItem = await itemModel.updateOne(filter, updateDoc, options);
+    if (updatedItem) {
+      console.log("Item update succesfully");
+      return updatedItem;
+    } else {
+      throw new Error("Item didnt update");
+    }
   }
 
   async getAllItems() {

@@ -21,7 +21,7 @@ const UserPage = (props) => {
   const { auth, setAuth } = props;
   const navigate = useNavigate();
   const email = useSelector((state) => state.user.email);
-  const { data: collections, isFetching: isLoading } =
+  const { data: collections, isFetching: isLoading, refetch } =
     useUserCollections(email);
 
   const loginClick = () => {
@@ -29,17 +29,21 @@ const UserPage = (props) => {
   };
 
   return (
-    <Flex justify={"center"}>
+    <Flex direction={"column"}>
       <LoadingOverlay visible={isLoading} overlayBlur={5} />
-      <CreateCollection close={close} opened={opened}></CreateCollection>
+      <CreateCollection close={close} opened={opened} refetch={refetch}></CreateCollection>
       {auth ? (
-        <Flex direction={"column"} gap={20} mt={60} w={"70vw"}>
-          <Flex direction={"row"} justify={"space-between"}>
+        <Flex direction={"column"} gap={20} mt={60} align={"center"} w={"100%"}>
+          <Flex
+            direction={"row"}
+            justify={"space-between"}
+            w={"100%"}
+            maw={900}
+          >
             <Flex direction={"row"} gap={5}>
               <Button onClick={open} color="red" radius="lg" uppercase>
                 Create
               </Button>
-
               <Button color="red" radius="lg" uppercase>
                 Delete
               </Button>
@@ -55,11 +59,16 @@ const UserPage = (props) => {
               ></IconLogout>
             </Flex>
           </Flex>
-          <Flex direction={"column"}>
+          <Flex direction={"column"} align={"center"} w={"100%"}>
             <LoadingOverlay visible={isLoading} overlayBlur={2} />
             {collections
               ? collections.map((collection, index) => (
-                  <Collection key={index} collection={collection} email={email}></Collection>
+                  <Collection
+                    key={index}
+                    collection={collection}
+                    email={email}
+                    refetch={refetch}
+                  ></Collection>
                 ))
               : []}
           </Flex>

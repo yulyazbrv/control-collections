@@ -11,22 +11,25 @@ import { useSelector } from "react-redux";
 import { checkLike } from "../../api/likeApi/checkLike";
 import { removeLike } from "../../api/likeApi/removeLike";
 import { useNavigate } from "react-router-dom";
+import { useDisclosure } from "@mantine/hooks";
+import { UpdateItem } from "../updateItem";
+import { DeleteModal } from "../deleteModal";
+import { removeItem } from "../../api/itemApi/removeItem";
 
 const Item = (props) => {
-  const { item } = props;
-  // const [opened, { open, close }] = useDisclosure(false);
+  const { item, refetch } = props;
+  const [opened, { open, close }] = useDisclosure(false);
+  const [openedModal, { open: openModal, close: closeModal }] =
+    useDisclosure(false);
   const [showComments, setShowComments] = useState(false);
   const [hasLiked, setHasLiked] = useState(false);
   const email = useSelector((state) => state.user.email) || "";
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const isCreator = () => {
-    if (item.collection && item.itemCollection.user) {
-      return email === item.itemCollection.user.email;
-    }
-    return false;
+    return email === item.itemCollection.user.email;
   };
-
+  console.log(isCreator());
   useEffect(() => {
     const checkUserLike = async () => {
       const userHasLiked = await checkLike(email, item._id);
@@ -44,6 +47,7 @@ const Item = (props) => {
       navigate(`/login`, { replace: true });
     }
   };
+
   const deleteLike = async () => {
     try {
       await removeLike(email, item._id);
@@ -52,6 +56,17 @@ const Item = (props) => {
       console.log(e.message);
     }
   };
+
+  const handleDelete = async () => {
+    try {
+      await removeItem(item._id);
+      closeModal();
+      refetch();
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
   return (
     <Card
       shadow="sm"
@@ -59,22 +74,55 @@ const Item = (props) => {
       radius="md"
       withBorder
       w={"100%"}
+      maw={900}
       className="collection-wrapper"
     >
-      {/* <UpdateCollection opened={opened} close={close} collection={collection}></UpdateCollection> */}
+      <UpdateItem
+        opened={opened}
+        close={close}
+        item={item}
+        refetch={refetch}
+      ></UpdateItem>
+      <DeleteModal
+        openedModal={openedModal}
+        handleDelete={handleDelete}
+      ></DeleteModal>{" "}
       <Flex>
         <Flex direction={"column"} gap={7} justify={"center"} w={"100%"}>
           <Flex align={"center"} justify={"space-between"} w={"100%"}>
             <Title order={3}>{item.name}</Title>
-            <Text >Author:{item.itemCollection.user.email}</Text>
+            <Text>Author:{item.itemCollection.user.email}</Text>
             {isCreator() && (
-              <Button color="red" radius="lg" uppercase w={100}>
-                Update
-              </Button>
+              <Flex gap={5}>
+                <Button
+                  color="red"
+                  radius="lg"
+                  uppercase
+                  onClick={open}
+                >
+                  Update
+                </Button>
+                <Button
+                  color="red"
+                  radius="lg"
+                  uppercase
+                  onClick={(e) => {
+                    openModal();
+                    e.stopPropagation();
+                  }}
+                >
+                  Delete
+                </Button>
+              </Flex>
             )}
           </Flex>
-          <Flex direction={"row"} justify={"space-between"} gap={5} align={"center"}>
-            <Text >Collection:{item.itemCollection.name}</Text>
+          <Flex
+            direction={"row"}
+            justify={"space-between"}
+            gap={5}
+            align={"center"}
+          >
+            <Text>Collection:{item.itemCollection.name}</Text>
             <Title lh={1.2} order={5}>
               {item.tags.length ? (
                 item.tags.map((tag, index) => (

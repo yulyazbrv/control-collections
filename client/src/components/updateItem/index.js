@@ -1,16 +1,16 @@
 import { Drawer, Button, Flex, Title, Input } from "@mantine/core";
 import { useState } from "react";
-import { updateCollection } from "../../api/collectionApi/updateCollection";
+import { updateItem } from "../../api/itemApi/updateItem";
 
-function UpdateCollection(props) {
-  const { opened, close, collection, refetch } = props;
+function UpdateItem(props) {
+  const { opened, close, item, refetch } = props;
   const [result, setResult] = useState("");
-  const [name, setName] = useState(collection.name);
-  const [description, setDescription] = useState(collection.description);
-  const [theme, setTheme] = useState(collection.theme);
+  const [name, setName] = useState(item.name);
+  const [tags, setTags] = useState(item.tags.join(" "));
+
   const updateClick = async () => {
     try {
-      await updateCollection(collection._id, name, description, theme);
+      await updateItem(item._id, name, tags);
       close();
       refetch()
     } catch (e) {
@@ -35,22 +35,18 @@ function UpdateCollection(props) {
             w={400}
             h={500}
           >
-            <Title order={2}>Update collection</Title>
+            <Title order={2}>Update item</Title>
             <Input
               placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <Input
-              placeholder="Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Tags"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
             />
-            <Input
-              placeholder="Theme"
-              value={theme}
-              onChange={(e) => setTheme(e.target.value)}
-            />
+
             <Button color="red" radius="lg" uppercase onClick={updateClick}>
               Update
             </Button>
@@ -62,4 +58,4 @@ function UpdateCollection(props) {
   );
 }
 
-export { UpdateCollection };
+export { UpdateItem };

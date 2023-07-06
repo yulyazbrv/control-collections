@@ -15,9 +15,9 @@ const HomePage = () => {
     ? collections.sort((a, b) => b.items.length - a.items.length).slice(0, 5)
     : [];
   return (
-    <Flex align={"center"} direction={"column"}>
+    <Flex align={"center"} direction={"column"} justify={"center"}>
       <TagsCloud></TagsCloud>
-      <Flex direction={"column"} mt={30} w={"100%"}>
+      <Flex direction={"column"} mt={30} w={"100%"} align={"center"}>
         <LoadingOverlay visible={isLoading} overlayBlur={5} />
         <Text>5 the biggest collections</Text>
         {biggestCollections ? (

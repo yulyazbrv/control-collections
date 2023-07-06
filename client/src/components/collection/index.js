@@ -6,17 +6,29 @@ import { UpdateCollection } from "../updateCollection";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCollection } from "../../redux/slices/collectionSlice";
+import { DeleteModal } from "../deleteModal";
+import { removeCollection } from "../../api/collectionApi/removeCollection";
 
 const Collection = (props) => {
-  const { collection, email } = props;
+  const { collection, email, refetch } = props;
   const [opened, { open, close }] = useDisclosure(false);
+  const [openedModal, { open: openModal, close: closeModal }] =
+    useDisclosure(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const openItem = () => {
     dispatch(setCollection(collection));
-    navigate(`/collection`, { replace: true });
+    navigate(`/collection/${collection._id}`, { replace: true });
   };
-
+  const handleDelete = async () => {
+    try {
+      await removeCollection(collection._id);
+      closeModal();
+      refetch();
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
   const isCreator = () => email === collection.user.email;
 
   return (
@@ -26,6 +38,7 @@ const Collection = (props) => {
       radius="md"
       withBorder
       w={"100%"}
+      maw={900}
       className="collection-wrapper"
       onClick={openItem}
     >
@@ -33,7 +46,12 @@ const Collection = (props) => {
         opened={opened}
         close={close}
         collection={collection}
+        refetch={refetch}
       ></UpdateCollection>
+      <DeleteModal
+        openedModal={openedModal}
+        handleDelete={handleDelete}
+      ></DeleteModal>
       <Flex>
         <Flex>
           <Image></Image>
@@ -42,9 +60,22 @@ const Collection = (props) => {
           <Flex align={"center"} justify={"space-between"} w={"100%"}>
             <Title order={3}>{collection.name}</Title>
             {isCreator() && (
-              <Button color="red" radius="lg" uppercase w={100} onClick={open}>
-                Update
-              </Button>
+              <Flex gap={5}>
+                <Button color="red" radius="lg" uppercase onClick={open}>
+                  Update
+                </Button>
+                <Button
+                  color="red"
+                  radius="lg"
+                  uppercase
+                  onClick={(e) => {
+                    openModal();
+                    e.stopPropagation();
+                  }}
+                >
+                  Delete
+                </Button>
+              </Flex>
             )}
           </Flex>
           <Flex direction={"column"}>

@@ -24,15 +24,8 @@ class CollectionService {
       throw new Error(`Collection with id ${id} isnot exists`);
     }
 
-    const deletedCollection = await collectionModel
-      .deleteOne({ _id: id })
-      .then(() => {
-        console.log("Collection deleted succesfully");
-        return deletedCollection;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    const deletedCollection = await collectionModel.deleteOne({ _id: id });
+    return deletedCollection;
   }
 
   async updateCollection(id, name, description, theme) {
@@ -67,12 +60,21 @@ class CollectionService {
     return collections;
   }
 
+  async getCollectionById(id) {
+    const collection = await collectionModel
+      .findOne({ _id: id })
+      .populate("user");
+    return collection;
+  }
+
   async getUserCollections(email) {
     const candidate = await userModel.findOne({ email });
     if (!candidate) {
       throw new Error(`User with ${email} does not exist`);
     }
-    const collections = await collectionModel.find({ user: candidate._id }).populate("user");
+    const collections = await collectionModel
+      .find({ user: candidate._id })
+      .populate("user");
     return collections;
   }
 }
