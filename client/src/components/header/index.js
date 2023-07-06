@@ -1,16 +1,16 @@
-import { Flex, Input } from "@mantine/core";
+import { Flex, Input, Select } from "@mantine/core";
 import { Link, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import "./style.css";
 import { IconSearch } from "@tabler/icons-react";
-import { ActionIcon, useMantineColorScheme } from '@mantine/core';
-import { IconSun, IconMoonStars } from '@tabler/icons-react';
+import { ActionIcon, useMantineColorScheme } from "@mantine/core";
+import { IconSun, IconMoonStars } from "@tabler/icons-react";
 
 const HeaderContent = (props) => {
-  const { auth } = props;
+  const { auth, i18n, t, ready } = props;
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const { pathname } = useLocation();
-  const dark = colorScheme === 'dark';
+  const dark = colorScheme === "dark";
 
   return (
     <Flex align={"center"} mih={50} justify={"center"}>
@@ -19,13 +19,13 @@ const HeaderContent = (props) => {
           to="/home"
           className={classNames("link", pathname === "/home" && "active")}
         >
-          HOME
+          {t('home')}
         </Link>
         <Link
           to="/user"
           className={classNames("link", pathname === "/user" && "active")}
         >
-          USER
+          {t('user')}
         </Link>
         <Input
           icon={<IconSearch />}
@@ -63,6 +63,15 @@ const HeaderContent = (props) => {
         >
           {dark ? <IconSun size="1.1rem" /> : <IconMoonStars size="1.1rem" />}
         </ActionIcon>
+        <Select
+          radius="lg"
+          size="xs"
+          onChange={(e) => i18n.changeLanguage(e.target.value)}
+          data={[
+            { value: "en", label: "English" },
+            { value: "pl", label: "Polish" },
+          ]}
+        ></Select>
       </Flex>
     </Flex>
   );

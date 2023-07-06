@@ -19,6 +19,8 @@ import { setUserEmail } from "./redux/slices/userSlice";
 import { CollectionPage } from "./pages/CollectionPage";
 import { HomePage } from "./pages/HomePage";
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
+import { useTranslation } from 'react-i18next';
+import "./i18n";
 
 function decodeToken(token) {
   try {
@@ -39,6 +41,7 @@ function App() {
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t, i18n, ready } = useTranslation()
 
   const toggleColorScheme = (value) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
@@ -78,7 +81,7 @@ function App() {
       >
         <AppShell
           header={
-            <Header>{<HeaderContent auth={auth} setAuth={setAuth} />}</Header>
+            <Header>{<HeaderContent auth={auth} setAuth={setAuth} i18n={i18n} t={t} ready={ready} />}</Header>
           }
           
         >
