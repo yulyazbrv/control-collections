@@ -15,23 +15,32 @@ import { logoutUser } from "../../api/authApi/logout";
 import { useDisclosure } from "@mantine/hooks";
 import { CreateCollection } from "../../components/createCollection";
 import { Collection } from "../../components/collection";
+import { useTranslation } from "react-i18next";
 
 const UserPage = (props) => {
   const [opened, { open, close }] = useDisclosure(false);
+  const { t } = useTranslation();
   const { auth, setAuth } = props;
   const navigate = useNavigate();
   const email = useSelector((state) => state.user.email);
-  const { data: collections, isFetching: isLoading, refetch } =
-    useUserCollections(email);
+  const {
+    data: collections,
+    isFetching: isLoading,
+    refetch,
+  } = useUserCollections(email);
 
   const loginClick = () => {
     navigate(`/login`, { replace: true });
   };
 
   return (
-    <Flex direction={"column"}>
+    <Flex direction={"column"} align={"center"} justify={"center"}>
       <LoadingOverlay visible={isLoading} overlayBlur={5} />
-      <CreateCollection close={close} opened={opened} refetch={refetch}></CreateCollection>
+      <CreateCollection
+        close={close}
+        opened={opened}
+        refetch={refetch}
+      ></CreateCollection>
       {auth ? (
         <Flex direction={"column"} gap={20} mt={60} align={"center"} w={"100%"}>
           <Flex
@@ -41,11 +50,8 @@ const UserPage = (props) => {
             maw={900}
           >
             <Flex direction={"row"} gap={5}>
-              <Button onClick={open} color="red" radius="lg" uppercase>
-                Create
-              </Button>
-              <Button color="red" radius="lg" uppercase>
-                Delete
+              <Button onClick={open} color="red" radius="lg">
+                {t("create")}
               </Button>
             </Flex>
             <Flex direction={"row"} gap={5} align={"center"}>
@@ -74,7 +80,7 @@ const UserPage = (props) => {
           </Flex>
         </Flex>
       ) : (
-        <Flex direction={"column"} w={"250px"} mt={110}>
+        <Flex direction={"column"} w={"100%"} maw={300} mt={110}>
           <LoadingOverlay visible={isLoading} overlayBlur={2} />
 
           <Image alt="nothing" src={emptyIcon} className="empty-img"></Image>

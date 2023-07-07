@@ -6,8 +6,10 @@ import { useSelector } from "react-redux";
 import { TagsCloud } from "../../components/tagsCloud";
 import { useItems } from "../../core/useItems";
 import { Item } from "../../components/item";
+import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
+  const { t } = useTranslation();
   const { data: collections, isFetching: isLoading } = useCollections();
   const { data: items, isFetching: isLoadingItems } = useItems();
   const email = useSelector((state) => state.user.email) || "";
@@ -19,7 +21,7 @@ const HomePage = () => {
       <TagsCloud></TagsCloud>
       <Flex direction={"column"} mt={30} w={"100%"} align={"center"}>
         <LoadingOverlay visible={isLoading} overlayBlur={5} />
-        <Text>5 the biggest collections</Text>
+        <Text>5 {t("the biggest collections")}</Text>
         {biggestCollections ? (
           biggestCollections.map((collection, index) => (
             <Collection
@@ -33,7 +35,7 @@ const HomePage = () => {
             <Image src={emptyIcon} alt="empty"></Image>
           </Flex>
         )}
-        <Text mt={30}>Last added items</Text>
+        <Text mt={30}>{t("Last added items")}</Text>
         {items && (
           items.map((item, index) => (
             <Item

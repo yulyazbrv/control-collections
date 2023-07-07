@@ -2,10 +2,12 @@ import { Drawer, Button, Flex, Title, Input } from "@mantine/core";
 import { useState } from "react";
 import { addCollection } from "../../api/collectionApi/addCollection";
 import {  useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 function CreateCollection(props) {
   const { opened, close, refetch } = props;
   const [name, setName] = useState("");
+  const { t } = useTranslation();
   const [description, setDescription] = useState("");
   const [theme, setTheme] = useState("");
   const [result, setResult] = useState("");
@@ -25,7 +27,7 @@ function CreateCollection(props) {
       <Drawer
         opened={opened}
         onClose={close}
-        title="Create Collection"
+        title={t("create collection")}
         overlayProps={{ opacity: 0.5, blur: 4 }}
       >
         <Flex align={"center"} justify={"center"}>
@@ -36,24 +38,24 @@ function CreateCollection(props) {
             w={400}
             h={500}
           >
-            <Title order={2}>Create collection</Title>
+            <Title order={2}>{t("create collection")}</Title>
             <Input
-              placeholder="Name"
+              placeholder={t("name")}
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <Input
-              placeholder="Description"
+              placeholder={t("description")}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
             <Input
-              placeholder="Theme"
+              placeholder={t("theme")}
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
             />
-            <Button color="red" radius="lg" uppercase onClick={createClick}>
-              Create
+            <Button color="red" radius="lg" onClick={createClick}>
+            {t("create")}
             </Button>
             <Title order={6}>{result}</Title>
           </Flex>

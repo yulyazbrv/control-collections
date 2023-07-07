@@ -15,9 +15,11 @@ import { useDisclosure } from "@mantine/hooks";
 import { UpdateItem } from "../updateItem";
 import { DeleteModal } from "../deleteModal";
 import { removeItem } from "../../api/itemApi/removeItem";
+import { useTranslation } from "react-i18next";
 
 const Item = (props) => {
   const { item, refetch } = props;
+  const { t } = useTranslation();
   const [opened, { open, close }] = useDisclosure(false);
   const [openedModal, { open: openModal, close: closeModal }] =
     useDisclosure(false);
@@ -86,32 +88,31 @@ const Item = (props) => {
       <DeleteModal
         openedModal={openedModal}
         handleDelete={handleDelete}
+        closeModal={closeModal}
       ></DeleteModal>{" "}
       <Flex>
         <Flex direction={"column"} gap={7} justify={"center"} w={"100%"}>
           <Flex align={"center"} justify={"space-between"} w={"100%"}>
             <Title order={3}>{item.name}</Title>
-            <Text>Author:{item.itemCollection.user.email}</Text>
+            <Text>{t("Author")}:{item.itemCollection.user.email}</Text>
             {isCreator() && (
               <Flex gap={5}>
                 <Button
                   color="red"
                   radius="lg"
-                  uppercase
                   onClick={open}
                 >
-                  Update
+                  {t("update")}
                 </Button>
                 <Button
                   color="red"
                   radius="lg"
-                  uppercase
                   onClick={(e) => {
                     openModal();
                     e.stopPropagation();
                   }}
                 >
-                  Delete
+                  {t("delete")}
                 </Button>
               </Flex>
             )}
@@ -122,7 +123,7 @@ const Item = (props) => {
             gap={5}
             align={"center"}
           >
-            <Text>Collection:{item.itemCollection.name}</Text>
+            <Text>{t("collection")}:{item.itemCollection.name}</Text>
             <Title lh={1.2} order={5}>
               {item.tags.length ? (
                 item.tags.map((tag, index) => (
@@ -131,7 +132,7 @@ const Item = (props) => {
                   </span>
                 ))
               ) : (
-                <span style={{ fontWeight: "350" }}>no tags</span>
+                <span style={{ fontWeight: "350" }}>{t("no tags")}</span>
               )}
             </Title>
             <Flex direction={"row"} gap={7}>

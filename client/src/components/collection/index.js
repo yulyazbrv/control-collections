@@ -8,9 +8,11 @@ import { useDispatch } from "react-redux";
 import { setCollection } from "../../redux/slices/collectionSlice";
 import { DeleteModal } from "../deleteModal";
 import { removeCollection } from "../../api/collectionApi/removeCollection";
+import { useTranslation } from "react-i18next";
 
 const Collection = (props) => {
   const { collection, email, refetch } = props;
+  const { t } = useTranslation();
   const [opened, { open, close }] = useDisclosure(false);
   const [openedModal, { open: openModal, close: closeModal }] =
     useDisclosure(false);
@@ -61,19 +63,21 @@ const Collection = (props) => {
             <Title order={3}>{collection.name}</Title>
             {isCreator() && (
               <Flex gap={5}>
-                <Button color="red" radius="lg" uppercase onClick={open}>
-                  Update
+                <Button color="red" radius="lg"onClick={(e) => {
+                    open();
+                    e.stopPropagation();
+                  }}>
+                  {t("update")}
                 </Button>
                 <Button
                   color="red"
                   radius="lg"
-                  uppercase
                   onClick={(e) => {
                     openModal();
                     e.stopPropagation();
                   }}
                 >
-                  Delete
+                  {t("delete")}
                 </Button>
               </Flex>
             )}
@@ -83,11 +87,11 @@ const Collection = (props) => {
               {collection.description}
             </ReactMarkdown>
             <Title lh={1.2} order={5}>
-              theme:{" "}
+              {t("theme")}:{" "}
               <span style={{ fontWeight: "350" }}>{collection.theme}</span>
             </Title>
             <Title lh={1.2} order={5}>
-              items count:{" "}
+              {t("items")} {t("count")}:{" "}
               <span style={{ fontWeight: "350" }}>
                 {collection.items.length}
               </span>

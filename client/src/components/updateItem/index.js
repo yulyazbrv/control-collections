@@ -1,6 +1,7 @@
 import { Drawer, Button, Flex, Title, Input } from "@mantine/core";
 import { useState } from "react";
 import { updateItem } from "../../api/itemApi/updateItem";
+import { t } from "i18next";
 
 function UpdateItem(props) {
   const { opened, close, item, refetch } = props;
@@ -24,7 +25,7 @@ function UpdateItem(props) {
         position="bottom"
         opened={opened}
         onClose={close}
-        title="Update Collection"
+        title={t("update item")}
         overlayProps={{ opacity: 0.5, blur: 4 }}
       >
         <Flex align={"center"} justify={"center"}>
@@ -35,20 +36,20 @@ function UpdateItem(props) {
             w={400}
             h={500}
           >
-            <Title order={2}>Update item</Title>
+            <Title order={2}>{t("update item")}</Title>
             <Input
-              placeholder="Name"
+              placeholder={t("name")}
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <Input
-              placeholder="Tags"
+              placeholder={t("tags")}
               value={tags}
               onChange={(e) => setTags(e.target.value)}
             />
 
-            <Button color="red" radius="lg" uppercase onClick={updateClick}>
-              Update
+            <Button color="red" radius="lg" onClick={updateClick}>
+            {t("update")}
             </Button>
             <Title order={6}>{result}</Title>
           </Flex>

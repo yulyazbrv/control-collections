@@ -10,9 +10,11 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { addItem } from "../../api/itemApi/addItem";
 import { useTags } from "../../core/useTags";
+import { useTranslation } from "react-i18next";
 
 function CreateItem(props) {
   const { opened, close, refetch } = props;
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [tags, setTags] = useState("");
   const [result, setResult] = useState("");
@@ -37,7 +39,7 @@ function CreateItem(props) {
       <Drawer
         opened={opened}
         onClose={close}
-        title="Create item"
+        title={t("create item")}
         overlayProps={{ opacity: 0.5, blur: 4 }}
       >
         <Flex align={"center"} justify={"center"}>
@@ -48,9 +50,9 @@ function CreateItem(props) {
             w={400}
             h={500}
           >
-            <Title order={2}>Create item</Title>
+            <Title order={2}>{t("create item")}</Title>
             <Input
-              placeholder="Name"
+              placeholder={t("name")}
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -67,13 +69,8 @@ function CreateItem(props) {
                   : []
               }
             />
-            {/* <Input
-              placeholder="#super #love #book"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-            /> */}
-            <Button color="red" radius="lg" uppercase onClick={createClick}>
-              Create
+            <Button color="red" radius="lg" onClick={createClick}>
+              {t("create")}
             </Button>
             <Title order={6}>{result}</Title>
           </Flex>

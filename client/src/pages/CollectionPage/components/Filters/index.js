@@ -1,7 +1,9 @@
 import { Button, Flex, Select } from "@mantine/core";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Filters = (props) => {
+  const { t } = useTranslation();
   const { items, setItems } = props;
   const [filter, setFilter] = useState();
 
@@ -28,18 +30,18 @@ const Filters = (props) => {
     <Flex direction={"row"} gap={5}>
       <Select
         radius="lg"
-        placeholder="Sort by..."
+        placeholder={t("sort by...")}
         value={filter}
         onChange={setFilter}
         data={[
-          { value: "likes", label: "Likes" },
-          { value: "comments", label: "Comments" },
-          { value: "alphabet", label: "Alphabetically" },
-          { value: "tags", label: "Tags" },
+          { value: "likes", label: t("likes") },
+          { value: "comments", label: t("comments") },
+          { value: "alphabet", label: t("alphabetically") },
+          { value: "tags", label: t("tags") },
         ]}
       ></Select>
       <Button color="red" radius="lg" uppercase onClick={confirmSort}>
-        Confirm
+        {t("confirm")}
       </Button>
     </Flex>
   );

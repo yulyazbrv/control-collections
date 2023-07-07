@@ -1,9 +1,11 @@
 import { Drawer, Button, Flex, Title, Input } from "@mantine/core";
 import { useState } from "react";
 import { updateCollection } from "../../api/collectionApi/updateCollection";
+import { useTranslation } from "react-i18next";
 
 function UpdateCollection(props) {
   const { opened, close, collection, refetch } = props;
+  const { t } = useTranslation();
   const [result, setResult] = useState("");
   const [name, setName] = useState(collection.name);
   const [description, setDescription] = useState(collection.description);
@@ -12,7 +14,7 @@ function UpdateCollection(props) {
     try {
       await updateCollection(collection._id, name, description, theme);
       close();
-      refetch()
+      refetch();
     } catch (e) {
       setResult(e.message);
     }
@@ -24,7 +26,7 @@ function UpdateCollection(props) {
         position="bottom"
         opened={opened}
         onClose={close}
-        title="Update Collection"
+        title={t("update Collection")}
         overlayProps={{ opacity: 0.5, blur: 4 }}
       >
         <Flex align={"center"} justify={"center"}>
@@ -35,24 +37,24 @@ function UpdateCollection(props) {
             w={400}
             h={500}
           >
-            <Title order={2}>Update collection</Title>
+            <Title order={2}>{t("update Collection")}</Title>
             <Input
-              placeholder="Name"
+              placeholder={t("name")}
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <Input
-              placeholder="Description"
+              placeholder={t("description")}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
             <Input
-              placeholder="Theme"
+              placeholder={t("theme")}
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
             />
-            <Button color="red" radius="lg" uppercase onClick={updateClick}>
-              Update
+            <Button color="red" radius="lg" onClick={updateClick}>
+              {t("update")}
             </Button>
             <Title order={6}>{result}</Title>
           </Flex>

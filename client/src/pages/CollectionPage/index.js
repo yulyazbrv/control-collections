@@ -11,8 +11,10 @@ import { Filters } from "./components/Filters";
 import { useParams } from "react-router-dom";
 import { useCollectionById } from "../../core/useCollectionById";
 import { DeleteModal } from "../../components/deleteModal";
+import { useTranslation } from "react-i18next";
 
 const CollectionPage = () => {
+  const { t } = useTranslation();
   const [opened, { open, close }] = useDisclosure(false);
   const { id } = useParams();
   const email = useSelector((state) => state.user.email);
@@ -51,12 +53,10 @@ const CollectionPage = () => {
             >
               {isCreator() && (
                 <Flex direction={"row"} gap={5}>
-                  <Button color="red" radius="lg" uppercase onClick={open}>
-                    Create
+                  <Button color="red" radius="lg" onClick={open}>
+                    {t("create")}
                   </Button>
-                  <Button color="red" radius="lg" uppercase>
-                    Delete
-                  </Button>
+                 
                 </Flex>
               )}
               <Flex direction={"column"} align={"flex-end"} gap={10}>
@@ -81,7 +81,7 @@ const CollectionPage = () => {
                     src={emptyIcon}
                   ></Image>
                   <Button color="red" radius="lg" uppercase onClick={open}>
-                    Create Item
+                    {t("create")} {t("item")}
                   </Button>
                 </Flex>
               )}

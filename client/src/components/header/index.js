@@ -5,16 +5,24 @@ import "./style.css";
 import { IconSearch } from "@tabler/icons-react";
 import { ActionIcon, useMantineColorScheme } from "@mantine/core";
 import { IconSun, IconMoonStars } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
+import { useTranslation  } from "react-i18next";
 
 const HeaderContent = (props) => {
-  const { auth, i18n, t, ready } = props;
+  const { t, i18n } = useTranslation();
+  const { auth } = props;
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const [language, setLanguage] = useState(i18n.language)
   const { pathname } = useLocation();
   const dark = colorScheme === "dark";
 
+  useEffect(() => {
+    i18n.changeLanguage(language)
+  },[language])
+
   return (
     <Flex align={"center"} mih={50} justify={"center"}>
-      <Flex gap={60} align={"center"}>
+      <Flex gap={30} align={"center"}>
         <Link
           to="/home"
           className={classNames("link", pathname === "/home" && "active")}
@@ -27,12 +35,7 @@ const HeaderContent = (props) => {
         >
           {t('user')}
         </Link>
-        <Input
-          icon={<IconSearch />}
-          placeholder="Search"
-          radius="lg"
-          variant="filled"
-        />
+        
         {auth ? (
           <></>
         ) : (
@@ -44,17 +47,35 @@ const HeaderContent = (props) => {
                 pathname === "/registration" && "active"
               )}
             >
-              SIGN UP
+              {t("sign up")}
             </Link>
 
             <Link
               to="/login"
               className={classNames("link", pathname === "/login" && "active")}
             >
-              SIGN IN
+             {t("sign in")}
             </Link>
           </>
         )}
+        
+        <Input
+          icon={<IconSearch />}
+          placeholder={t('search')}
+          radius="lg"
+          variant="filled"
+          size={"xs"}
+        />
+        <Select
+          radius="lg"
+          size={"xs"}
+          value={language}
+          onChange={setLanguage}
+          data={[
+            { value: "en", label: "English" },
+            { value: "pl", label: "Polish" },
+          ]}
+        ></Select>
         <ActionIcon
           variant="outline"
           color={dark ? "yellow" : "red"}
@@ -63,15 +84,6 @@ const HeaderContent = (props) => {
         >
           {dark ? <IconSun size="1.1rem" /> : <IconMoonStars size="1.1rem" />}
         </ActionIcon>
-        <Select
-          radius="lg"
-          size="xs"
-          onChange={(e) => i18n.changeLanguage(e.target.value)}
-          data={[
-            { value: "en", label: "English" },
-            { value: "pl", label: "Polish" },
-          ]}
-        ></Select>
       </Flex>
     </Flex>
   );
