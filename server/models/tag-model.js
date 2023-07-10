@@ -13,4 +13,6 @@ const TagSchema = new Schema({
   ],
 });
 
+TagSchema.index({ name: 'text' });
+
 module.exports = model("Tag", TagSchema);

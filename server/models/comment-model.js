@@ -18,4 +18,6 @@ const CommentSchema = new Schema({
   },
 });
 
+CommentSchema.index({ message: 'text' });
+
 module.exports = model("Comment", CommentSchema);

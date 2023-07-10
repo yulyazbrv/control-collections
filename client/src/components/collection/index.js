@@ -1,7 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import { Button, Card, Flex, Image, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import "./style.css";
 import { UpdateCollection } from "../updateCollection";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -9,6 +8,7 @@ import { setCollection } from "../../redux/slices/collectionSlice";
 import { DeleteModal } from "../deleteModal";
 import { removeCollection } from "../../api/collectionApi/removeCollection";
 import { useTranslation } from "react-i18next";
+import "./style.css";
 
 const Collection = (props) => {
   const { collection, email, refetch } = props;

@@ -33,7 +33,7 @@ const CollectionPage = () => {
   return (
     <Flex direction={"column"}>
       {isLoadingCollection || isLoading ? (
-        <LoadingOverlay></LoadingOverlay>
+        <LoadingOverlay visible={isLoadingCollection || isLoading} overlayBlur={2}></LoadingOverlay>
       ) : (
         <Flex direction={"column"} align={"center"}>
           <CreateItem close={close} opened={opened} refetch={refetch}></CreateItem>

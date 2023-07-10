@@ -59,6 +59,16 @@ class ItemController {
       next(e);
     }
   }
+
+  async getItemsById(req, res, next) {
+    try {
+      const { id } = req.query;
+      const items = await itemService.getItemsById(id);
+      return res.json(items);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 module.exports = new ItemController();

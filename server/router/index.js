@@ -75,6 +75,7 @@ router.delete(
 router.post("/addComment", authMiddleware, commentController.addComment);
 router.get("/getComments", commentController.getComments);
 router.get("/getCollections", collectionController.getCollections);
+router.get("/getFullSearch", collectionController.getFullSearch);
 router.get("/getCollectionById", collectionController.getCollectionById);
 router.get(
   "/getUserCollections",
@@ -83,6 +84,7 @@ router.get(
 );
 router.get("/getItems", itemController.getAllItems);
 router.get("/getItemsByTag", itemController.getItemsByTag);
+router.get("/getItemsById", itemController.getItemsById);
 router.get("/getCollectionItems", itemController.getCollectionItems);
 
 module.exports = router;

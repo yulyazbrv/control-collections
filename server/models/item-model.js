@@ -24,4 +24,6 @@ const ItemSchema = new Schema({
   tags: [String],
 });
 
+ItemSchema.index({ name: 'text' });
+
 module.exports = model("Item", ItemSchema);

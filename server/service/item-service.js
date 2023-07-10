@@ -9,7 +9,9 @@ class ItemService {
       throw new Error(`Collection with id ${idCollection} isnot exists`);
     }
 
-    const tagsArray = tags.split(" ").filter((tag) => tag.startsWith("#"));
+    const tagsArray = tags
+      ? tags.split(" ").filter((tag) => tag.startsWith("#"))
+      : [];
     const item = await itemModel.create({
       itemCollection: idCollection,
       name: name,
@@ -40,9 +42,14 @@ class ItemService {
     if (!item) {
       throw new Error(`Item with id ${id} isnot exists`);
     }
+    const collection = await collectionModel.findById({
+      _id: item.itemCollection,
+    });
+    collection.items.pull(id);
+    await collection.save();
 
     const deletedItem = await itemModel.deleteOne({ _id: id });
-    console.log(deletedItem)
+    console.log(deletedItem);
     return deletedItem;
   }
 
@@ -105,6 +112,22 @@ class ItemService {
         },
       });
     return items;
+  }
+
+  async getItemsById(id) {
+    try {
+      const arrId = id.split(",");
+      const items = await itemModel.find({ _id: { $in: arrId } }).populate({
+        path: "itemCollection",
+        populate: {
+          path: "user",
+          model: "User",
+        },
+      });
+      return items;
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 }
 

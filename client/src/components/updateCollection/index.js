@@ -26,7 +26,7 @@ function UpdateCollection(props) {
         position="bottom"
         opened={opened}
         onClose={close}
-        title={t("update Collection")}
+        title={t("update collection")}
         overlayProps={{ opacity: 0.5, blur: 4 }}
       >
         <Flex align={"center"} justify={"center"}>
@@ -37,7 +37,7 @@ function UpdateCollection(props) {
             w={400}
             h={500}
           >
-            <Title order={2}>{t("update Collection")}</Title>
+            <Title order={2}>{t("update collection")}</Title>
             <Input
               placeholder={t("name")}
               value={name}

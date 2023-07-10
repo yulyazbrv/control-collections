@@ -69,6 +69,16 @@ class CollectionController {
       next(e);
     }
   }
+
+  async getFullSearch(req, res, next) {
+    try {
+      const { searchText } = req.query;
+      const collections = await collectionService.fullSearch(searchText);
+      return res.json(collections);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 module.exports = new CollectionController();

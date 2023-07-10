@@ -17,7 +17,7 @@ const BoxItems = (props) => {
         <Flex w={"100%"} direction={"row"} justify={"flex-end"}>
           <IconX onClick={() => setBoxItems(false)}></IconX>
         </Flex>
-        {items.length !== 0 ? (
+        {items && items.length !== 0 ? (
           items.map((item, index) => <Item key={index} item={item}></Item>)
         ) : (
           <Flex>

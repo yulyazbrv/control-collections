@@ -23,15 +23,8 @@ const ItemCollectionSchema = new Schema({
     type: String,
     required: true,
   },
-  author: {//???
-    type: String,
-  },
-  published: {
-    type: Date,
-  },
-  content: {
-    type: String,
-  },
 });
+
+ItemCollectionSchema.index({ name: "text", description: "text", theme: "text" });
 
 module.exports = model("ItemCollection", ItemCollectionSchema);

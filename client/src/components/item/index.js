@@ -27,11 +27,10 @@ const Item = (props) => {
   const [hasLiked, setHasLiked] = useState(false);
   const email = useSelector((state) => state.user.email) || "";
   const navigate = useNavigate();
-
+  const [countOfLikes, setCountOfLikes] = useState(item.likes.length) 
   const isCreator = () => {
     return email === item.itemCollection.user.email;
   };
-  console.log(isCreator());
   useEffect(() => {
     const checkUserLike = async () => {
       const userHasLiked = await checkLike(email, item._id);
@@ -44,6 +43,7 @@ const Item = (props) => {
     try {
       setHasLiked(true);
       await addLike(email, item._id);
+      setCountOfLikes(item.likes.length + 1)
     } catch (e) {
       console.log(e.message);
       navigate(`/login`, { replace: true });
@@ -147,7 +147,7 @@ const Item = (props) => {
               ) : (
                 <IconHeartFilled onClick={deleteLike}></IconHeartFilled>
               )}
-              <span style={{ fontWeight: "350" }}>{item.likes.length}</span>
+              <span style={{ fontWeight: "350" }}>{countOfLikes}</span>
             </Flex>
           </Flex>
           {showComments && <Comments item={item}></Comments>}
