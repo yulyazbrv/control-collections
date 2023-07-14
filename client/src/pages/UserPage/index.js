@@ -23,12 +23,13 @@ const UserPage = (props) => {
   const { auth, setAuth } = props;
   const navigate = useNavigate();
   const email = useSelector((state) => state.user.email);
+  const isAdmin = useSelector((state) => state.user)
+  console.log("scsc", isAdmin)
   const {
     data: collections,
     isFetching: isLoading,
     refetch,
   } = useUserCollections(email);
-
   const loginClick = () => {
     navigate(`/login`, { replace: true });
   };

@@ -9,6 +9,8 @@ import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { SearchArea } from "../searchArea";
 import { SearchModal } from "./components/searchModal";
+import { useAdmin } from "../../core/useAdmin";
+import { useSelector } from "react-redux";
 
 const HeaderContent = (props) => {
   const { t, i18n } = useTranslation();
@@ -19,6 +21,9 @@ const HeaderContent = (props) => {
   const [opened, setOpened] = useState(false);
 
   const dark = colorScheme === "dark";
+
+  const email = useSelector((state) => state.user.email) || "";
+  const { data: isAdmin } = useAdmin(email);
 
   useEffect(() => {
     i18n.changeLanguage(language);
@@ -34,12 +39,21 @@ const HeaderContent = (props) => {
           >
             {t("home")}
           </Link>
-          <Link
-            to="/user"
-            className={classNames("link", pathname === "/user" && "active")}
-          >
-            {t("user")}
-          </Link>
+          {isAdmin ? (
+            <Link
+              to="/admin"
+              className={classNames("link", pathname === "/admin" && "active")}
+            >
+              {t("admin")}
+            </Link>
+          ) : (
+            <Link
+              to="/user"
+              className={classNames("link", pathname === "/user" && "active")}
+            >
+              {t("user")}
+            </Link>
+          )}
 
           {auth ? (
             <></>
@@ -68,6 +82,7 @@ const HeaderContent = (props) => {
           )}
           <IconSearch onClick={() => setOpened(true)}></IconSearch>
           <Select
+            w={"90px"}
             radius="lg"
             size={"xs"}
             value={language}

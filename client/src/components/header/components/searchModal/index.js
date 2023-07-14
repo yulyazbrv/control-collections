@@ -1,6 +1,7 @@
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { debounce } from "../../../../helpers/debounce";
 
 const { Drawer, Flex, ScrollArea, Input } = require("@mantine/core");
 const { SearchArea } = require("../../../searchArea");
@@ -10,6 +11,11 @@ const SearchModal = (props) => {
   const [searchText, setSearchText] = useState("");
   const { t, i18n } = useTranslation();
   const [showSearch, setShowSearch] = useState(false);
+  const handleChange = (e) => {
+    setSearchText(e.target.value);
+    setShowSearch(true);
+  }
+  const handleChangeWithDebounce = debounce(handleChange, 1000)
   return (
     <Drawer
       opened={opened}
@@ -32,10 +38,7 @@ const SearchModal = (props) => {
             variant="filled"
             size={"xs"}
             value={searchText}
-            onChange={(e) => {
-              setSearchText(e.target.value);
-              setShowSearch(true);
-            }}
+            onChange={handleChangeWithDebounce}
           />
           {showSearch && (
             <SearchArea

@@ -19,7 +19,7 @@ const Login = (props) => {
       await loginUser(email, password);
       setAuth(true);
       dispatch(setUserEmail(email))
-      navigate(`/user`, {replace: true});
+      navigate(`/home`, {replace: true});
     } catch (e) {
       setResult(e.message);
     }

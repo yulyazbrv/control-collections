@@ -1,14 +1,18 @@
 const collectionService = require("../service/collection-service");
+const fs = require("fs");
 
 class CollectionController {
   async addCollection(req, res, next) {
     try {
       const { email, name, description, theme } = req.body;
+      var img = fs.readFileSync(req.file.path);
+
       const collection = await collectionService.addCollection(
         email,
         name,
         description,
-        theme
+        theme,
+        img
       );
       return res.json(collection);
     } catch (e) {

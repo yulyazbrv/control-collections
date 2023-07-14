@@ -23,8 +23,16 @@ const ItemCollectionSchema = new Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: Buffer,
+    required: true,
+  },
 });
 
-ItemCollectionSchema.index({ name: "text", description: "text", theme: "text" });
+ItemCollectionSchema.index({
+  name: "text",
+  description: "text",
+  theme: "text",
+});
 
 module.exports = model("ItemCollection", ItemCollectionSchema);

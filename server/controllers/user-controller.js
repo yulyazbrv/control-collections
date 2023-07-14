@@ -102,7 +102,7 @@ class UserController {
   async addNewAdmin(req, res, next) {
     try {
       const { email } = req.body;
-      const user = await userService.addNewAdmin(email);
+      const user = await userService.addAdmin(email);
       return res.json(user);
     } catch (e) {
       next(e);
@@ -114,6 +114,16 @@ class UserController {
       const { email } = req.body;
       const user = await userService.removeAdmin(email);
       return res.json(user);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async isAdmin(req, res, next) {
+    try {
+      const { email } = req.query;
+      const checkAdmin = await userService.isAdmin(email);
+      return res.json(checkAdmin);
     } catch (e) {
       next(e);
     }

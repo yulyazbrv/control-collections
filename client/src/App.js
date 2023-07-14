@@ -10,7 +10,6 @@ import {
   Header,
   MantineProvider,
   ColorSchemeProvider,
-  ColorScheme,
 } from "@mantine/core";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
@@ -19,7 +18,6 @@ import { setUserEmail } from "./redux/slices/userSlice";
 import { CollectionPage } from "./pages/CollectionPage";
 import { HomePage } from "./pages/HomePage";
 import { useLocalStorage } from "@mantine/hooks";
-import { useTranslation } from "react-i18next";
 import "./i18n";
 
 function decodeToken(token) {
@@ -33,7 +31,6 @@ function decodeToken(token) {
 }
 
 const App = () => {
-  const { t, i18n, ready } = useTranslation();
   const [auth, setAuth] = useState();
   const [colorScheme, setColorScheme] = useLocalStorage({
     key: "mantine-color-scheme",
@@ -89,7 +86,7 @@ const App = () => {
             <Route path="/registration" element={<Registration />}></Route>
             <Route path="/login" element={<Login setAuth={setAuth} />}></Route>
             <Route path="/home" element={<HomePage auth={auth} />}></Route>
-            <Route path="/adminPanel" element={<AdminPanel />}></Route>
+            <Route path="/admin" element={<AdminPanel auth={auth} setAuth={setAuth} />}></Route>
             <Route
               path="/user"
               element={<UserPage auth={auth} setAuth={setAuth} />}

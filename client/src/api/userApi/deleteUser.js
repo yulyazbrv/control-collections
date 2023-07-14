@@ -1,6 +1,12 @@
 import { deleteHelper } from "../../helpers/apiHelper";
 
-export const deleteAdmin = async (email) => {
-  const response = await deleteHelper("/deleteUser", { email });
-  return response;
+export const deleteUser = async (emailArray) => {
+  if (emailArray) {
+    const responses = emailArray.map((email) => {
+      return deleteHelper("/deleteUser", { email });
+    });
+    Promise.all(responses);
+  } else {
+    console.log("emailArray is empty");
+  }
 };

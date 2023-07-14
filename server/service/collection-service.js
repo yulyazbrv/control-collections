@@ -4,7 +4,7 @@ const itemModel = require("../models/item-model");
 const userModel = require("../models/user-model");
 
 class CollectionService {
-  async addCollection(email, name, description, theme) {
+  async addCollection(email, name, description, theme, img) {
     const candidate = await userModel.findOne({ email });
     if (!candidate) {
       throw new Error(`User with ${email} does not exist`);
@@ -15,6 +15,8 @@ class CollectionService {
       name: name,
       description: description,
       theme: theme,
+      image: img,
+
     });
 
     return collection;

@@ -9,6 +9,9 @@ import { DeleteModal } from "../deleteModal";
 import { removeCollection } from "../../api/collectionApi/removeCollection";
 import { useTranslation } from "react-i18next";
 import "./style.css";
+import { useEffect, useState } from "react";
+import { imagefrombuffer } from "imagefrombuffer";
+import { useAdmin } from "../../core/useAdmin";
 
 const Collection = (props) => {
   const { collection, email, refetch } = props;
@@ -18,8 +21,10 @@ const Collection = (props) => {
     useDisclosure(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const openItem = () => {
     dispatch(setCollection(collection));
+
     navigate(`/collection/${collection._id}`, { replace: true });
   };
   const handleDelete = async () => {
@@ -32,6 +37,7 @@ const Collection = (props) => {
     }
   };
   const isCreator = () => email === collection.user.email;
+  const { data: isAdmin } = useAdmin(email);
 
   return (
     <Card
@@ -54,19 +60,30 @@ const Collection = (props) => {
         openedModal={openedModal}
         handleDelete={handleDelete}
       ></DeleteModal>
-      <Flex>
+      <Flex align={"center"} gap={10}>
         <Flex>
-          <Image></Image>
+          {collection.image && (
+            <Image
+              src={imagefrombuffer({
+                type: collection.image?.contentType,
+                data: collection.image?.data,
+              })}
+            ></Image>
+          )}
         </Flex>
         <Flex direction={"column"} gap={7} justify={"center"} w={"100%"}>
           <Flex align={"center"} justify={"space-between"} w={"100%"}>
             <Title order={3}>{collection.name}</Title>
-            {isCreator() && (
+            {(isAdmin || isCreator()) && (
               <Flex gap={5}>
-                <Button color="red" radius="lg"onClick={(e) => {
+                <Button
+                  color="red"
+                  radius="lg"
+                  onClick={(e) => {
                     open();
                     e.stopPropagation();
-                  }}>
+                  }}
+                >
                   {t("update")}
                 </Button>
                 <Button

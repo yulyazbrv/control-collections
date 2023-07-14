@@ -1,7 +1,7 @@
-import { Drawer, Button, Flex, Title, Input } from "@mantine/core";
+import { Drawer, Button, Flex, Title, Input, FileInput } from "@mantine/core";
 import { useState } from "react";
 import { addCollection } from "../../api/collectionApi/addCollection";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 function CreateCollection(props) {
@@ -11,12 +11,15 @@ function CreateCollection(props) {
   const [description, setDescription] = useState("");
   const [theme, setTheme] = useState("");
   const [result, setResult] = useState("");
+  const [image, setImage] = useState(null);
   const email = useSelector((state) => state.user.email);
+
   const createClick = async () => {
     try {
-      await addCollection(email, name, description, theme);
+      console.log(image)
+      await addCollection(email, name, description, theme, image);
       close();
-      refetch()
+      refetch();
     } catch (e) {
       setResult(e.message);
     }
@@ -54,8 +57,15 @@ function CreateCollection(props) {
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
             />
+            <FileInput
+              placeholder="Pick file"
+              label="Image"
+              withAsterisk
+              value={image}
+              onChange={setImage}
+            />
             <Button color="red" radius="lg" onClick={createClick}>
-            {t("create")}
+              {t("create")}
             </Button>
             <Title order={6}>{result}</Title>
           </Flex>

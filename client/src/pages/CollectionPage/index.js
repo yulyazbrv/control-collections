@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import { useCollectionById } from "../../core/useCollectionById";
 import { DeleteModal } from "../../components/deleteModal";
 import { useTranslation } from "react-i18next";
+import { useAdmin } from "../../core/useAdmin";
 
 const CollectionPage = () => {
   const { t } = useTranslation();
@@ -23,7 +24,8 @@ const CollectionPage = () => {
   const { data: itemsData, isFetching: isLoading, refetch } = useCollectionItems(id);
   const [items, setItems] = useState()
   const isCreator = () => (email === collection.user.email);
- 
+  const { data: isAdmin } = useAdmin(email);
+
   useEffect(() => {
     if (itemsData) {
       setItems(itemsData);
@@ -51,7 +53,7 @@ const CollectionPage = () => {
               w={"100%"}
               maw={900}
             >
-              {isCreator() && (
+              {(isAdmin || isCreator()) && (
                 <Flex direction={"row"} gap={5}>
                   <Button color="red" radius="lg" onClick={open}>
                     {t("create")}

@@ -17,6 +17,7 @@ class UserService {
       password: hashPassword,
       status: "unblocked",
     });
+    
     const userDto = new UserDto(user);
     const tokens = tokenService.generateTokens({ ...userDto });
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
@@ -164,6 +165,16 @@ class UserService {
     const options = { upsert: true };
     const user = await UserModel.updateOne(filter, updateDoc, options);
     return user;
+  }
+
+  async isAdmin(email) {
+    const candidate = await UserModel.findOne({ email });
+    if (!candidate) {
+      throw new Error(`User with ${email} isnot exists`);
+    }
+    console.log("user", candidate)
+    const checkAdmin = candidate.isAdmin
+    return checkAdmin
   }
 }
 

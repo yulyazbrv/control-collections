@@ -10,7 +10,15 @@ const likeController = require("../controllers/like-controller");
 const itemController = require("../controllers/item-controller");
 const collectionController = require("../controllers/collection-controller");
 const commentController = require("../controllers/comment-controller");
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: "upload",
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
 
+const upload = multer({ storage });
 router.post(
   "/registration",
   body("email").isEmail(),
@@ -22,30 +30,27 @@ router.post("/registration", userController.registration);
 router.post("/login", loginMiddleware, userController.login);
 router.post("/logout", userController.logout);
 router.get("/refresh", userController.refresh);
-router.get("/users", authMiddleware, adminMiddleware, userController.getUsers);
+router.get("/users", authMiddleware, userController.getUsers);
+router.get("/isAdmin", authMiddleware, userController.isAdmin);
 router.delete(
   "/deleteUser",
   authMiddleware,
-  adminMiddleware,
   userController.removeUser
 );
-router.put("/block", authMiddleware, adminMiddleware, userController.blockUser);
+router.put("/block", authMiddleware, userController.blockUser);
 router.put(
   "/unblock",
   authMiddleware,
-  adminMiddleware,
   userController.unblockUser
 );
 router.put(
   "/addAdmin",
   authMiddleware,
-  adminMiddleware,
   userController.addNewAdmin
 );
 router.put(
   "/removeAdmin",
   authMiddleware,
-  adminMiddleware,
   userController.deleteAdmin
 );
 router.post("/addTag", authMiddleware, tagController.addNewTag);
@@ -59,6 +64,7 @@ router.put("/updateItem", authMiddleware, itemController.updateItem);
 router.delete("/deleteItem", authMiddleware, itemController.removeItem);
 router.post(
   "/addCollection",
+  upload.single("image"),
   authMiddleware,
   collectionController.addCollection
 );

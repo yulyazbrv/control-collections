@@ -59,14 +59,31 @@ class ItemService {
       throw new Error(`Item with id ${id} isnot exists`);
     }
     const filter = { _id: id };
+    const tagsArray = tags
+      ? tags.split(" ").filter((tag) => tag.startsWith("#"))
+      : [];
     const updateDoc = {
       $set: {
         name: name,
-        tags: tags,
+        tags: tagsArray ? tagsArray : [],
       },
     };
     const options = { upsert: true };
     const updatedItem = await itemModel.updateOne(filter, updateDoc, options);
+      if (tagsArray.length) {
+        const createTags = async () => {
+          try {
+            for (const tag of tagsArray) {
+              await tagModel.create({ name: tag, item: item._id });
+            }
+          } catch (e) {
+            console.error(e.message);
+          }
+        };
+  
+        createTags();
+      }
+
     if (updatedItem) {
       console.log("Item update succesfully");
       return updatedItem;
@@ -116,6 +133,9 @@ class ItemService {
 
   async getItemsById(id) {
     try {
+      if(id === ""){
+        return null
+      }
       const arrId = id.split(",");
       const items = await itemModel.find({ _id: { $in: arrId } }).populate({
         path: "itemCollection",

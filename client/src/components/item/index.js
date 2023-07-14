@@ -16,6 +16,7 @@ import { UpdateItem } from "../updateItem";
 import { DeleteModal } from "../deleteModal";
 import { removeItem } from "../../api/itemApi/removeItem";
 import { useTranslation } from "react-i18next";
+import { useAdmin } from "../../core/useAdmin";
 
 const Item = (props) => {
   const { item, refetch } = props;
@@ -27,10 +28,12 @@ const Item = (props) => {
   const [hasLiked, setHasLiked] = useState(false);
   const email = useSelector((state) => state.user.email) || "";
   const navigate = useNavigate();
-  const [countOfLikes, setCountOfLikes] = useState(item.likes.length) 
+  const [countOfLikes, setCountOfLikes] = useState(item.likes.length);
   const isCreator = () => {
     return email === item.itemCollection.user.email;
   };
+  const { data: isAdmin } = useAdmin(email);
+
   useEffect(() => {
     const checkUserLike = async () => {
       const userHasLiked = await checkLike(email, item._id);
@@ -43,7 +46,7 @@ const Item = (props) => {
     try {
       setHasLiked(true);
       await addLike(email, item._id);
-      setCountOfLikes(item.likes.length + 1)
+      setCountOfLikes(item.likes.length + 1);
     } catch (e) {
       console.log(e.message);
       navigate(`/login`, { replace: true });
@@ -94,14 +97,12 @@ const Item = (props) => {
         <Flex direction={"column"} gap={7} justify={"center"} w={"100%"}>
           <Flex align={"center"} justify={"space-between"} w={"100%"}>
             <Title order={3}>{item.name}</Title>
-            <Text>{t("Author")}:{item.itemCollection.user.email}</Text>
-            {isCreator() && (
+            <Text>
+              {t("Author")}:{item.itemCollection.user.email}
+            </Text>
+            {(isAdmin || isCreator()) && (
               <Flex gap={5}>
-                <Button
-                  color="red"
-                  radius="lg"
-                  onClick={open}
-                >
+                <Button color="red" radius="lg" onClick={open}>
                   {t("update")}
                 </Button>
                 <Button
@@ -123,7 +124,9 @@ const Item = (props) => {
             gap={5}
             align={"center"}
           >
-            <Text>{t("collection")}:{item.itemCollection.name}</Text>
+            <Text>
+              {t("collection")}:{item.itemCollection.name}
+            </Text>
             <Title lh={1.2} order={5}>
               {item.tags.length ? (
                 item.tags.map((tag, index) => (
