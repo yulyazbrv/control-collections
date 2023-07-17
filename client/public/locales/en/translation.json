@@ -37,5 +37,18 @@
   "create collection": "create collection",
   "update item": "update item",
   "update collection": "update collection",
-  "create item": "create item"
+  "create item": "create item",
+  "admin": "admin",
+  "your email": "your email",
+  "password": "password",
+  "login": "login",
+  "registration": "registration",
+  "your name": "your name",
+  "Hello": "Hello",
+  "add to admins": "add to admins",
+  "remove from admins": "remove from admins",
+  "block": "block",
+  "unblock": "unblock",
+  "select all": "select all",
+  "remove select": "remove select"
 }

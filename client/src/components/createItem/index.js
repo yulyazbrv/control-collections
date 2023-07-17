@@ -19,6 +19,11 @@ function CreateItem(props) {
   const [tags, setTags] = useState("");
   const [result, setResult] = useState("");
   const { data: tagsData } = useTags();
+  const uniqueTags = tagsData
+    ? Array.from(new Set(tagsData.map((tag) => tag.name))).map((name) =>
+        tagsData.find((tag) => tag.name === name)
+      )
+    : [];
   const collection = useSelector((state) => state.collection.collection);
   const createClick = async () => {
     try {
@@ -61,8 +66,8 @@ function CreateItem(props) {
               onChange={setTags}
               placeholder="#super #love #book"
               data={
-                tagsData
-                  ? tagsData.map((tag, index) => ({
+                uniqueTags
+                  ? uniqueTags.map((tag, index) => ({
                       value: tag.name,
                       key: index,
                     }))

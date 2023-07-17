@@ -77,11 +77,12 @@ const Collection = (props) => {
             {(isAdmin || isCreator()) && (
               <Flex gap={5}>
                 <Button
+                  style={"position: relative; z-index: 1000"}
                   color="red"
                   radius="lg"
                   onClick={(e) => {
-                    open();
                     e.stopPropagation();
+                    open();
                   }}
                 >
                   {t("update")}
@@ -90,8 +91,8 @@ const Collection = (props) => {
                   color="red"
                   radius="lg"
                   onClick={(e) => {
-                    openModal();
                     e.stopPropagation();
+                    openModal();
                   }}
                 >
                   {t("delete")}

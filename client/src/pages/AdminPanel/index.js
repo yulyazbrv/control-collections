@@ -19,14 +19,18 @@ import { logoutUser } from "../../api/authApi/logout";
 import { addAdmin } from "../../api/userApi/addAdmin";
 import { deleteAdmin } from "../../api/userApi/deleteAdmin";
 import emptyIcon from "./assets/nothing.png";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const AdminPanel = (props) => {
   const { setAuth, auth } = props;
+  const { t } = useTranslation();
   const { data: users, isFetching: isLoading, refetch } = useUsers();
   const email = useSelector((state) => state.user.email);
   const [selectedEmail, setSelectedEmail] = useState([]);
   const { data: collections, isFetching: isLoadingCollectons } =
     useCollections();
+  const navigate = useNavigate();
 
   const handleCheckboxChange = (email) => {
     if (selectedEmail.includes(email)) {
@@ -77,6 +81,10 @@ const AdminPanel = (props) => {
     refetch();
   };
 
+  const loginClick = () => {
+    navigate(`/login`, { replace: true });
+  };
+
   const rows = users
     ? users.map((user) => (
         <tr key={user._id}>
@@ -104,7 +112,9 @@ const AdminPanel = (props) => {
           <Flex justify={"space-between"} align={"center"}>
             <Flex direction={"column"} gap={5}>
               <Flex align={"center"} gap={10}>
-                <Title order={3}>Hello, {email}</Title>
+                <Title order={3}>
+                  {t("Hello")}, {email}
+                </Title>
                 <IconLogout
                   onClick={() => {
                     logoutUser();
@@ -114,31 +124,31 @@ const AdminPanel = (props) => {
               </Flex>
               <Flex gap={5}>
                 <Button color="red" radius="lg" onClick={addAdminClick}>
-                  Add to admins
+                  {t("add to admins")}
                 </Button>
                 <Button color="red" radius="lg" onClick={removeAdminClick}>
-                  Remove from admins
+                  {t("remove from admins")}
                 </Button>
               </Flex>
             </Flex>
             <Flex gap={5} direction={"column"}>
               <Flex gap={5}>
                 <Button color="red" radius="lg" onClick={selectAll}>
-                  Select All
+                  {t("select all")}
                 </Button>
                 <Button color="red" radius="lg" onClick={clearSelection}>
-                  Remove select
+                  {t("remove select")}
                 </Button>
               </Flex>
               <Flex gap={5}>
                 <Button color="red" radius="lg" onClick={blockClick}>
-                  Block
+                  {t("block")}
                 </Button>
                 <Button color="red" radius="lg" onClick={unblockClick}>
-                  Unblock
+                  {t("unblock")}
                 </Button>
                 <Button color="red" radius="lg" onClick={removeClick}>
-                  Delete
+                  {t("delete")}
                 </Button>
               </Flex>
             </Flex>
@@ -174,13 +184,13 @@ const AdminPanel = (props) => {
           </Flex>
         </Flex>
       ) : (
-          <Flex direction={"column"} w={"100%"} maw={300} mt={110}>
-            <LoadingOverlay visible={isLoading} overlayBlur={2} />
-            <Image alt="nothing" src={emptyIcon} className="empty-img"></Image>
-            <Button color="red" radius="lg" >
-              SIGN IN
-            </Button>
-          </Flex>
+        <Flex direction={"column"} w={"100%"} maw={300} mt={110}>
+          <LoadingOverlay visible={isLoading} overlayBlur={2} />
+          <Image alt="nothing" src={emptyIcon} className="empty-img"></Image>
+          <Button color="red" radius="lg" onClick={loginClick}>
+            {t("sign in")}
+          </Button>
+        </Flex>
       )}
     </Flex>
   );

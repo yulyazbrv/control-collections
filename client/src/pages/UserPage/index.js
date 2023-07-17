@@ -23,8 +23,8 @@ const UserPage = (props) => {
   const { auth, setAuth } = props;
   const navigate = useNavigate();
   const email = useSelector((state) => state.user.email);
-  const isAdmin = useSelector((state) => state.user)
-  console.log("scsc", isAdmin)
+  const isAdmin = useSelector((state) => state.user);
+  console.log("scsc", isAdmin);
   const {
     data: collections,
     isFetching: isLoading,
@@ -85,8 +85,8 @@ const UserPage = (props) => {
           <LoadingOverlay visible={isLoading} overlayBlur={2} />
 
           <Image alt="nothing" src={emptyIcon} className="empty-img"></Image>
-          <Button color="red" radius="lg" uppercase onClick={loginClick}>
-            SIGN IN
+          <Button color="red" radius="lg" onClick={loginClick}>
+            {t("sign in")}
           </Button>
         </Flex>
       )}
