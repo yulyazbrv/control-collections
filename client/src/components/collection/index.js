@@ -13,7 +13,7 @@ import { imagefrombuffer } from "imagefrombuffer";
 import { useAdmin } from "../../core/useAdmin";
 
 const Collection = (props) => {
-  const { collection, email, refetch } = props;
+  const { collection, email, refetch, auth, refetchItems } = props;
 
   const { t } = useTranslation();
   const [opened, { open, close }] = useDisclosure(false);
@@ -38,6 +38,11 @@ const Collection = (props) => {
   };
   const isCreator = () => email === collection.user.email;
   const { data: isAdmin } = useAdmin(email);
+
+  useEffect(() => {
+    refetch();
+    refetchItems();
+  }, [auth]);
 
   return (
     <>

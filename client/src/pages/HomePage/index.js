@@ -32,11 +32,6 @@ const HomePage = (props) => {
     i18n.changeLanguage(language);
   }, [language, i18n]);
 
-  useEffect(() => {
-    refetch();
-    refetchItems();
-  }, [auth]);
-
   return (
     <Flex align={"center"} direction={"column"} justify={"center"}>
       <Flex justify={"space-between"} maw={900} w={"100%"}>
@@ -74,6 +69,8 @@ const HomePage = (props) => {
               collection={collection}
               email={email}
               refetch={refetch}
+              refetchItems={refetchItems}
+              auth={auth}
             ></Collection>
           ))
         ) : (
