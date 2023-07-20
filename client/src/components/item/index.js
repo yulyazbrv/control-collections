@@ -21,7 +21,7 @@ import { useAdmin } from "../../core/useAdmin";
 import { CustomFieldsArea } from "./components/customFieldsArea";
 
 const Item = (props) => {
-  const { item, refetch } = props;
+  const { item, refetch, auth } = props;
   const { t } = useTranslation();
   const [opened, { open, close }] = useDisclosure(false);
   const [openedModal, { open: openModal, close: closeModal }] =
@@ -114,7 +114,7 @@ const Item = (props) => {
             <Text>
               {t("Author")}:{item.itemCollection.user.email}
             </Text>
-            {(isAdmin || isCreator()) && (
+            {(isAdmin || isCreator()) && auth && (
               <Flex gap={5}>
                 <Button color="red" radius="lg" onClick={open}>
                   {t("update")}
