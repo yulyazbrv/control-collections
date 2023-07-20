@@ -11,13 +11,18 @@ import { useEffect, useState } from "react";
 import { ActionIcon, useMantineColorScheme } from "@mantine/core";
 import { IconSun, IconMoonStars } from "@tabler/icons-react";
 
-const HomePage = () => {
+const HomePage = (props) => {
+  const { auth } = props;
   const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState(i18n.language);
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const dark = colorScheme === "dark";
-  const { data: collections, isFetching: isLoading, refetch } = useCollections();
-  const { data: items } = useItems();
+  const {
+    data: collections,
+    isFetching: isLoading,
+    refetch,
+  } = useCollections();
+  const { data: items, refetch: refetchItems } = useItems();
   const email = useSelector((state) => state.user.email) || "";
   const biggestCollections = collections
     ? collections.sort((a, b) => b.items.length - a.items.length).slice(0, 5)
@@ -26,6 +31,11 @@ const HomePage = () => {
   useEffect(() => {
     i18n.changeLanguage(language);
   }, [language, i18n]);
+
+  useEffect(() => {
+    refetch();
+    refetchItems();
+  }, [auth]);
 
   return (
     <Flex align={"center"} direction={"column"} justify={"center"}>

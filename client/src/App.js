@@ -82,7 +82,7 @@ const App = () => {
           }
         >
           <Routes>
-            <Route path="/" element={<HomePage />}></Route>
+            <Route path="/" element={<HomePage auth={auth} />}></Route>
             <Route path="/registration" element={<Registration />}></Route>
             <Route path="/login" element={<Login setAuth={setAuth} />}></Route>
             <Route path="/home" element={<HomePage auth={auth} />}></Route>
