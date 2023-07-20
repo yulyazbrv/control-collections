@@ -11,10 +11,9 @@ import { useTranslation } from "react-i18next";
 import "./style.css";
 import { imagefrombuffer } from "imagefrombuffer";
 import { useAdmin } from "../../core/useAdmin";
-import { useEffect } from "react";
 
 const Collection = (props) => {
-  const { collection, email, refetch, auth, refetchItems } = props;
+  const { collection, email, refetch, auth } = props;
 
   const { t } = useTranslation();
   const [opened, { open, close }] = useDisclosure(false);
@@ -39,11 +38,6 @@ const Collection = (props) => {
   };
   const isCreator = () => email === collection.user.email;
   const { data: isAdmin } = useAdmin(email);
-
-  useEffect(() => {
-    refetch();
-    refetchItems();
-  }, [auth]);
 
   return (
     <>
@@ -78,7 +72,7 @@ const Collection = (props) => {
               wrap={"wrap"}
             >
               <Title order={3}>{collection.name}</Title>
-              {(isAdmin || isCreator()) && (
+              {(isAdmin || isCreator()) && auth && (
                 <Flex gap={5}>
                   <Button
                     color="red"

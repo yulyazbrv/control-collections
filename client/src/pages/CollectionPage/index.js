@@ -20,9 +20,13 @@ const CollectionPage = () => {
   const email = useSelector((state) => state.user.email);
   const { data: collection, isFetching: isLoadingCollection } =
     useCollectionById(id);
-  const { data: itemsData, isFetching: isLoading, refetch } = useCollectionItems(id);
-  const [items, setItems] = useState()
-  const isCreator = () => (email === collection.user.email);
+  const {
+    data: itemsData,
+    isFetching: isLoading,
+    refetch,
+  } = useCollectionItems(id);
+  const [items, setItems] = useState();
+  const isCreator = () => email === collection.user.email;
   const { data: isAdmin } = useAdmin(email);
 
   useEffect(() => {
@@ -34,10 +38,17 @@ const CollectionPage = () => {
   return (
     <Flex direction={"column"}>
       {isLoadingCollection || isLoading ? (
-        <LoadingOverlay visible={isLoadingCollection || isLoading} overlayBlur={2}></LoadingOverlay>
+        <LoadingOverlay
+          visible={isLoadingCollection || isLoading}
+          overlayBlur={2}
+        ></LoadingOverlay>
       ) : (
         <Flex direction={"column"} align={"center"}>
-          <CreateItem close={close} opened={opened} refetch={refetch}></CreateItem>
+          <CreateItem
+            close={close}
+            opened={opened}
+            refetch={refetch}
+          ></CreateItem>
           <Flex
             direction={"column"}
             align={"center"}
@@ -57,7 +68,6 @@ const CollectionPage = () => {
                   <Button color="red" radius="lg" onClick={open}>
                     {t("create")}
                   </Button>
-                 
                 </Flex>
               )}
               <Flex direction={"column"} align={"flex-end"} gap={10}>
@@ -65,23 +75,24 @@ const CollectionPage = () => {
                   <Title order={4}>{collection.name}</Title>
                   <IconFileDescription radius="xl" />
                 </Flex>
-                <Filters setItems={setItems} items={items} ></Filters>
+                <Filters setItems={setItems} items={items}></Filters>
               </Flex>
             </Flex>
 
             <Flex direction={"column"} gap={10} align={"center"} w={"100%"}>
-              {items && items.length !== 0 ? (
+              {items || items.length !== 0 ? (
                 items.map((item, index) => (
-                  <Item key={index} item={item} isCreator={isCreator} refetch={refetch}></Item>
+                  <Item
+                    key={index}
+                    item={item}
+                    isCreator={isCreator}
+                    refetch={refetch}
+                  ></Item>
                 ))
               ) : (
                 <Flex direction={"column"} w={"100%"} maw={300} mt={110}>
                   <LoadingOverlay visible={isLoading} overlayBlur={2} />
-                  <Image
-                    radius={20}
-                    alt="nothing"
-                    src={emptyIcon}
-                  ></Image>
+                  <Image radius={20} alt="nothing" src={emptyIcon}></Image>
                   <Button color="red" radius="lg" uppercase onClick={open}>
                     {t("create")} {t("item")}
                   </Button>
