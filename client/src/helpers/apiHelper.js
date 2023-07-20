@@ -2,7 +2,7 @@ import axios from "axios";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
 import { refreshAuthLogic } from "../api/authApi/checkAuth";
 
-export const API_URL = ` http://localhost:5000/api`;
+export const API_URL = ` https://control-collections.vercel.app/api`;
 
 const axiosInstance = axios.create({ withCredentials: true, baseURL: API_URL });
 createAuthRefreshInterceptor(axiosInstance, refreshAuthLogic);

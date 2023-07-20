@@ -4,7 +4,6 @@ const { body } = require("express-validator");
 const userController = require("../controllers/user-controller");
 const loginMiddleware = require("../middlewares/login-middleware");
 const authMiddleware = require("../middlewares/auth-middleware");
-const adminMiddleware = require("../middlewares/admin-middleware");
 const tagController = require("../controllers/tag-controller");
 const likeController = require("../controllers/like-controller");
 const itemController = require("../controllers/item-controller");
