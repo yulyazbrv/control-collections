@@ -12,7 +12,7 @@ app.use(express.json());//?
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://control-collections.vercel.app",
+    origin: "https://control-collections-client.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     handlePreflightRequest: (req, res) => {
