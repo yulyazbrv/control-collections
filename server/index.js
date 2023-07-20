@@ -12,12 +12,12 @@ app.use(express.json());//?
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://control-collections.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     handlePreflightRequest: (req, res) => {
       res.writeHead(200, {
-        "Access-Control-Allow-Origin": "http://localhost:3000",
+        "Access-Control-Allow-Origin": "https://control-collections.vercel.app",
         "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE",
         "Access-Control-Allow-Headers": "my-custom-header",
         "Access-Control-Allow-Credentials": true,
