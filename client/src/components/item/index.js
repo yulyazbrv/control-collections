@@ -34,7 +34,7 @@ const Item = (props) => {
   const [countOfLikes, setCountOfLikes] = useState(item.likes.length);
   const [countOfComments, setCountOfComments] = useState(item.comments.length);
   const isCreator = () => {
-    return email === item.itemCollection.user.email;
+    return email === item?.itemCollection?.user?.email;
   };
   const { data: isAdmin } = useAdmin(email);
 
@@ -110,9 +110,9 @@ const Item = (props) => {
             w={"100%"}
             wrap={"wrap"}
           >
-            <Title order={3}>{item.name}</Title>
+            <Title order={3}>{item?.name}</Title>
             <Text>
-              {t("Author")}:{item.itemCollection.user.email}
+              {t("Author")}:{item?.itemCollection?.user?.email}
             </Text>
             {(isAdmin || isCreator()) && (
               <Flex gap={5}>
@@ -139,7 +139,7 @@ const Item = (props) => {
             align={"center"}
           >
             <Text>
-              {t("collection")}:{item.itemCollection.name}
+              {t("collection")}:{item?.itemCollection?.name}
             </Text>
             <Title lh={1.2} order={5}>
               {item.tags.length ? (
