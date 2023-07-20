@@ -22,7 +22,8 @@ const HomePage = (props) => {
     isFetching: isLoading,
     refetch,
   } = useCollections();
-  const { data: items } = useItems();
+  const { data: items, refetch: refetchItems } = useItems();
+  debugger;
   const email = useSelector((state) => state.user.email) || "";
   const biggestCollections = collections
     ? collections.sort((a, b) => b.items.length - a.items.length).slice(0, 5)
@@ -69,6 +70,7 @@ const HomePage = (props) => {
               collection={collection}
               email={email}
               refetch={refetch}
+              refetchItems={refetchItems}
               auth={auth}
             ></Collection>
           ))
