@@ -65,7 +65,12 @@ const Collection = (props) => {
             )}
           </Flex>
           <Flex direction={"column"} gap={7} justify={"center"} w={"100%"}>
-            <Flex align={"center"} justify={"space-between"} w={"100%"}>
+            <Flex
+              align={"center"}
+              justify={"space-between"}
+              w={"100%"}
+              wrap={"wrap"}
+            >
               <Title order={3}>{collection.name}</Title>
               {(isAdmin || isCreator()) && (
                 <Flex gap={5}>

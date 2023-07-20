@@ -9,13 +9,17 @@ const CustomFieldsArea = (props) => {
 
   return (
     <Flex direction={"column"}>
-      {collectionFields ? collectionFields.map((field, index)=> (
-        <Flex key={index}>
-          <Text fw={700} mr={5}>{index + 1}.</Text>
-          <Text>{field.name} :</Text>
-          <Text ml={5}>{field.value}</Text>
-        </Flex>
-      )) : (
+      {collectionFields && collectionFields.length !== 0 ? (
+        collectionFields.map((field, index) => (
+          <Flex key={index}>
+            <Text fw={700} mr={5}>
+              {index + 1}.
+            </Text>
+            <Text>{field.name} :</Text>
+            <Text ml={5}>{field.value}</Text>
+          </Flex>
+        ))
+      ) : (
         <Flex>
           <Text>No custom fields yet</Text>
         </Flex>

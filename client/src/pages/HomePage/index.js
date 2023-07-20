@@ -16,7 +16,7 @@ const HomePage = () => {
   const [language, setLanguage] = useState(i18n.language);
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const dark = colorScheme === "dark";
-  const { data: collections, isFetching: isLoading } = useCollections();
+  const { data: collections, isFetching: isLoading, refetch } = useCollections();
   const { data: items } = useItems();
   const email = useSelector((state) => state.user.email) || "";
   const biggestCollections = collections
@@ -63,6 +63,7 @@ const HomePage = () => {
               key={index}
               collection={collection}
               email={email}
+              refetch={refetch}
             ></Collection>
           ))
         ) : (
