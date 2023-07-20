@@ -12,7 +12,7 @@ const collectionController = require("../controllers/collection-controller");
 const commentController = require("../controllers/comment-controller");
 const multer = require("multer");
 const storage = multer.diskStorage({
-  destination: "tmp/upload",
+  destination: "/tmp/upload",
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   },
