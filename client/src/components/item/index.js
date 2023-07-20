@@ -80,6 +80,7 @@ const Item = (props) => {
       console.log(e.message);
     }
   };
+  console.log("s", item)
 
   return (
     <Card
@@ -112,7 +113,7 @@ const Item = (props) => {
           >
             <Title order={3}>{item.name}</Title>
             <Text>
-              {t("Author")}:{item.itemCollection.user.email}
+              {/* {t("Author")}:{item.itemCollection.user.email} */}
             </Text>
             {(isAdmin || isCreator()) && auth && (
               <Flex gap={5}>
