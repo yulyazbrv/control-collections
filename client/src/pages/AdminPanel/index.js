@@ -188,6 +188,7 @@ const AdminPanel = (props) => {
                     key={index}
                     collection={collection}
                     email={email}
+                    auth={auth}
                   ></Collection>
                 ))
               ) : (

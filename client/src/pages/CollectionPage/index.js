@@ -80,7 +80,7 @@ const CollectionPage = () => {
             </Flex>
 
             <Flex direction={"column"} gap={10} align={"center"} w={"100%"}>
-              {items || items.length !== 0 ? (
+              {items && items.length !== 0 ? (
                 items.map((item, index) => (
                   <Item
                     key={index}
