@@ -92,7 +92,7 @@ const App = () => {
               element={<UserPage auth={auth} setAuth={setAuth} />}
             ></Route>
             <Route path="/collection">
-              <Route path=":id" element={<CollectionPage />}></Route>
+              <Route path=":id" element={<CollectionPage auth={auth} />}></Route>
             </Route>
           </Routes>
         </AppShell>

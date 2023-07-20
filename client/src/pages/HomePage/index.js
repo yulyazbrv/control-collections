@@ -22,7 +22,7 @@ const HomePage = (props) => {
     isFetching: isLoading,
     refetch,
   } = useCollections();
-  const { data: items} = useItems();
+  const { data: items } = useItems();
   const email = useSelector((state) => state.user.email) || "";
   const biggestCollections = collections
     ? collections.sort((a, b) => b.items.length - a.items.length).slice(0, 5)
@@ -79,7 +79,9 @@ const HomePage = (props) => {
         )}
         <Text mt={30}>{t("Last added items")}</Text>
         {items &&
-          items.map((item, index) => <Item key={index} item={item}></Item>)}
+          items.map((item, index) => (
+            <Item key={index} item={item} auth={auth}></Item>
+          ))}
       </Flex>
     </Flex>
   );
