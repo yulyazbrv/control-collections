@@ -21,7 +21,7 @@ import { useAdmin } from "../../core/useAdmin";
 import { CustomFieldsArea } from "./components/customFieldsArea";
 
 const Item = (props) => {
-  const { item, refetch, auth } = props;
+  const { item, refetch } = props;
   const { t } = useTranslation();
   const [opened, { open, close }] = useDisclosure(false);
   const [openedModal, { open: openModal, close: closeModal }] =
@@ -48,7 +48,7 @@ const Item = (props) => {
   }, [email, item._id]);
 
   useEffect(() => {
-    setCountOfComments(item.comments.length)
+    setCountOfComments(item.comments.length);
   }, [item]);
 
   const sendLike = async () => {
@@ -80,7 +80,6 @@ const Item = (props) => {
       console.log(e.message);
     }
   };
-  console.log("s", item)
 
   return (
     <Card
@@ -113,9 +112,9 @@ const Item = (props) => {
           >
             <Title order={3}>{item.name}</Title>
             <Text>
-              {/* {t("Author")}:{item.itemCollection.user.email} */}
+              {t("Author")}:{item.itemCollection.user.email}
             </Text>
-            {(isAdmin || isCreator()) && auth && (
+            {(isAdmin || isCreator()) && (
               <Flex gap={5}>
                 <Button color="red" radius="lg" onClick={open}>
                   {t("update")}
