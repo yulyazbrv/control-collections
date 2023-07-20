@@ -5,12 +5,12 @@ const Comment = (props) => {
   const { comment } = props;
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder w={"100%"}>
-      <Flex direction={"row"} justify={"flex-start"}>
+      <Flex direction={"row"} justify={"flex-start"} >
         <IconMessageDots></IconMessageDots>
         <Flex direction={"column"}>
-          <Flex>
-            <Title order={5}>{comment.user.email} |</Title>
-            <Title order={5}>{comment.creation_date}</Title>
+          <Flex wrap={"wrap"}>
+            <Title order={6}>{comment.user.email} | </Title>
+            <Title order={6}> {comment.creation_date}</Title>
           </Flex>
           <Text fz="md">{comment.message}</Text>
         </Flex>

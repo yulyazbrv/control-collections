@@ -3,13 +3,13 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { debounce } from "../../../../helpers/debounce";
 
-const { Drawer, Flex, ScrollArea, Input } = require("@mantine/core");
+const { Drawer, Flex, Input } = require("@mantine/core");
 const { SearchArea } = require("../../../searchArea");
 
 const SearchModal = (props) => {
   const { opened, setOpened } = props;
   const [searchText, setSearchText] = useState("");
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [showSearch, setShowSearch] = useState(false);
   const handleChange = (e) => {
     setSearchText(e.target.value);

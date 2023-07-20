@@ -4,15 +4,15 @@ const fs = require("fs");
 class CollectionController {
   async addCollection(req, res, next) {
     try {
-      const { email, name, description, theme } = req.body;
+      const { email, name, description, theme, customFields } = req.body;
       var img = fs.readFileSync(req.file.path);
-
       const collection = await collectionService.addCollection(
         email,
         name,
         description,
         theme,
-        img
+        img,
+        customFields
       );
       return res.json(collection);
     } catch (e) {
@@ -58,6 +58,16 @@ class CollectionController {
     try {
       const { id } = req.query;
       const collection = await collectionService.getCollectionById(id);
+      return res.json(collection);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async getCollectionFields(req, res, next) {
+    try {
+      const { id } = req.query;
+      const collection = await collectionService.getCollectionFields(id);
       return res.json(collection);
     } catch (e) {
       next(e);

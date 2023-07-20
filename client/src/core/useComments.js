@@ -14,7 +14,7 @@ export const useComments = (id) => {
     {
       enabled: !!id,
       refetchOnWindowFocus: false,
-      refetchOnMount: false,
+      refetchOnMount: true,
       refetchOnReconnect: false,
       staleTime: Infinity,
     }

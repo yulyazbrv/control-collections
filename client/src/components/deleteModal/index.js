@@ -1,4 +1,4 @@
-import { Button, Modal, Title } from "@mantine/core";
+import { Button, Modal } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 
 const DeleteModal = (props) => {

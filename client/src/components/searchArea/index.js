@@ -1,8 +1,7 @@
-import { Flex, Loader, LoadingOverlay, ScrollArea, Text } from "@mantine/core";
+import { Flex, LoadingOverlay, ScrollArea, Text } from "@mantine/core";
 import { useItemsById } from "../../core/useItemsById";
 import { useSearch } from "../../core/useSearch";
 import { Item } from "../item";
-import { IconX } from "@tabler/icons-react";
 import { useEffect } from "react";
 
 const SearchArea = (props) => {

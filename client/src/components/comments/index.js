@@ -5,10 +5,11 @@ import { useState } from "react";
 import { addComment } from "../../api/commentApi/addComment";
 import { useSelector } from "react-redux";
 import "./style.css";
+import { useTranslation } from "react-i18next";
 
 const Comments = (props) => {
-  const { item } = props;
-
+  const { item, setCountOfComments } = props;
+  const { t } = useTranslation();
   const { data: comments, isLoading, refetch } = useComments(item._id);
   const [result, setResult] = useState("");
   const [textComment, setTextComment] = useState("");
@@ -18,6 +19,7 @@ const Comments = (props) => {
       await addComment(email, item._id, textComment);
       setTextComment("");
       setResult("Succesfully");
+      setCountOfComments(item.comments.length + 1)
       refetch();
     } catch (e) {
       setResult(e.message);
@@ -38,17 +40,17 @@ const Comments = (props) => {
           <Comment key={index} comment={comment}></Comment>
         ))
       ) : (
-        <Title order={5}>No comments yet!</Title>
+        <Title order={6}>no comments yet</Title>
       )}
       <Textarea
         w={"100%"}
-        placeholder="Your comment"
-        label="Your comment"
+        placeholder={t("your comment")}
+        label={t("your comment")}
         withAsterisk
         onChange={(e) => setTextComment(e.currentTarget.value)}
       />
-      <Button color="red" radius="lg" uppercase onClick={sendComment}>
-        Send
+      <Button color="red" radius="lg"  onClick={sendComment}>
+        {t("send")}
       </Button>
       <Title order={6}>{result}</Title>
     </Flex>

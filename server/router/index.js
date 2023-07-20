@@ -32,27 +32,11 @@ router.post("/logout", userController.logout);
 router.get("/refresh", userController.refresh);
 router.get("/users", authMiddleware, userController.getUsers);
 router.get("/isAdmin", authMiddleware, userController.isAdmin);
-router.delete(
-  "/deleteUser",
-  authMiddleware,
-  userController.removeUser
-);
+router.delete("/deleteUser", authMiddleware, userController.removeUser);
 router.put("/block", authMiddleware, userController.blockUser);
-router.put(
-  "/unblock",
-  authMiddleware,
-  userController.unblockUser
-);
-router.put(
-  "/addAdmin",
-  authMiddleware,
-  userController.addNewAdmin
-);
-router.put(
-  "/removeAdmin",
-  authMiddleware,
-  userController.deleteAdmin
-);
+router.put("/unblock", authMiddleware, userController.unblockUser);
+router.put("/addAdmin", authMiddleware, userController.addNewAdmin);
+router.put("/removeAdmin", authMiddleware, userController.deleteAdmin);
 router.post("/addTag", authMiddleware, tagController.addNewTag);
 router.get("/getTags", tagController.getTags);
 router.delete("/deleteTag", authMiddleware, tagController.deleteTag);
@@ -83,6 +67,8 @@ router.get("/getComments", commentController.getComments);
 router.get("/getCollections", collectionController.getCollections);
 router.get("/getFullSearch", collectionController.getFullSearch);
 router.get("/getCollectionById", collectionController.getCollectionById);
+router.get("/getCollectionFields", collectionController.getCollectionFields);
+
 router.get(
   "/getUserCollections",
   authMiddleware,

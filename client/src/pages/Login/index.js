@@ -42,7 +42,7 @@ const Login = (props) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button color="red" radius="lg" uppercase onClick={loginClick}>
+        <Button color="red" radius="lg" onClick={loginClick}>
           {t("sign in")}
         </Button>
         <Title order={6}>{result}</Title>

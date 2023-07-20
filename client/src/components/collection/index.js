@@ -9,12 +9,12 @@ import { DeleteModal } from "../deleteModal";
 import { removeCollection } from "../../api/collectionApi/removeCollection";
 import { useTranslation } from "react-i18next";
 import "./style.css";
-import { useEffect, useState } from "react";
 import { imagefrombuffer } from "imagefrombuffer";
 import { useAdmin } from "../../core/useAdmin";
 
 const Collection = (props) => {
   const { collection, email, refetch } = props;
+
   const { t } = useTranslation();
   const [opened, { open, close }] = useDisclosure(false);
   const [openedModal, { open: openModal, close: closeModal }] =
@@ -40,16 +40,76 @@ const Collection = (props) => {
   const { data: isAdmin } = useAdmin(email);
 
   return (
-    <Card
-      shadow="sm"
-      padding="lg"
-      radius="md"
-      withBorder
-      w={"100%"}
-      maw={900}
-      className="collection-wrapper"
-      onClick={openItem}
-    >
+    <>
+      <Card
+        shadow="sm"
+        padding="lg"
+        radius="md"
+        withBorder
+        w={"100%"}
+        maw={900}
+        className="collection-wrapper"
+        onClick={openItem}
+      >
+        <Flex align={"center"} gap={10}>
+          <Flex>
+            {collection.image && (
+              <Image
+                maw={100}
+                mah={100}
+                src={imagefrombuffer({
+                  type: collection.image?.contentType,
+                  data: collection.image?.data,
+                })}
+              ></Image>
+            )}
+          </Flex>
+          <Flex direction={"column"} gap={7} justify={"center"} w={"100%"}>
+            <Flex align={"center"} justify={"space-between"} w={"100%"}>
+              <Title order={3}>{collection.name}</Title>
+              {(isAdmin || isCreator()) && (
+                <Flex gap={5}>
+                  <Button
+                    color="red"
+                    radius="lg"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      open();
+                    }}
+                  >
+                    {t("update")}
+                  </Button>
+                  <Button
+                    color="red"
+                    radius="lg"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openModal();
+                    }}
+                  >
+                    {t("delete")}
+                  </Button>
+                </Flex>
+              )}
+            </Flex>
+            <Flex direction={"column"}>
+              <ReactMarkdown className="markdown-text">
+                {collection.description}
+              </ReactMarkdown>
+              <Title lh={1.2} order={5}>
+                {t("theme")}:{" "}
+                <span style={{ fontWeight: "350" }}>{collection.theme}</span>
+              </Title>
+              <Title lh={1.2} order={5}>
+                {t("items")} {t("count")}:{" "}
+                <span style={{ fontWeight: "350" }}>
+                  {collection.items.length}
+                </span>
+              </Title>
+            </Flex>
+          </Flex>
+        </Flex>
+      </Card>
       <UpdateCollection
         opened={opened}
         close={close}
@@ -60,64 +120,7 @@ const Collection = (props) => {
         openedModal={openedModal}
         handleDelete={handleDelete}
       ></DeleteModal>
-      <Flex align={"center"} gap={10}>
-        <Flex>
-          {collection.image && (
-            <Image
-              src={imagefrombuffer({
-                type: collection.image?.contentType,
-                data: collection.image?.data,
-              })}
-            ></Image>
-          )}
-        </Flex>
-        <Flex direction={"column"} gap={7} justify={"center"} w={"100%"}>
-          <Flex align={"center"} justify={"space-between"} w={"100%"}>
-            <Title order={3}>{collection.name}</Title>
-            {(isAdmin || isCreator()) && (
-              <Flex gap={5}>
-                <Button
-                  style={"position: relative; z-index: 1000"}
-                  color="red"
-                  radius="lg"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    open();
-                  }}
-                >
-                  {t("update")}
-                </Button>
-                <Button
-                  color="red"
-                  radius="lg"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openModal();
-                  }}
-                >
-                  {t("delete")}
-                </Button>
-              </Flex>
-            )}
-          </Flex>
-          <Flex direction={"column"}>
-            <ReactMarkdown className="markdown-text">
-              {collection.description}
-            </ReactMarkdown>
-            <Title lh={1.2} order={5}>
-              {t("theme")}:{" "}
-              <span style={{ fontWeight: "350" }}>{collection.theme}</span>
-            </Title>
-            <Title lh={1.2} order={5}>
-              {t("items")} {t("count")}:{" "}
-              <span style={{ fontWeight: "350" }}>
-                {collection.items.length}
-              </span>
-            </Title>
-          </Flex>
-        </Flex>
-      </Flex>
-    </Card>
+    </>
   );
 };
 

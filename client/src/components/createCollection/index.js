@@ -1,4 +1,12 @@
-import { Drawer, Button, Flex, Title, Input, FileInput } from "@mantine/core";
+import {
+  Drawer,
+  Button,
+  Flex,
+  Title,
+  Input,
+  FileInput,
+  Text,
+} from "@mantine/core";
 import { useState } from "react";
 import { addCollection } from "../../api/collectionApi/addCollection";
 import { useSelector } from "react-redux";
@@ -13,17 +21,45 @@ function CreateCollection(props) {
   const [result, setResult] = useState("");
   const [image, setImage] = useState(null);
   const email = useSelector((state) => state.user.email);
+  const [customFields, setCustomFields] = useState([
+    { name: "", value: "" },
+    { name: "", value: "" },
+    { name: "", value: "" },
+  ]);
+
+  const handleChangeCustomFieldName = (value, index, isName) => {
+    const updatedCustomFields = [...customFields];
+    if (isName) {
+      updatedCustomFields[index].name = value;
+    } else {
+      updatedCustomFields[index].value = value;
+    }
+    setCustomFields(updatedCustomFields);
+  };
 
   const createClick = async () => {
     try {
-      console.log(image)
-      await addCollection(email, name, description, theme, image);
+      const filteredCustomFields = customFields.filter((item) => !!item.name);
+      await addCollection(
+        email,
+        name,
+        description,
+        theme,
+        image,
+        filteredCustomFields
+      );
       close();
       refetch();
     } catch (e) {
       setResult(e.message);
     }
   };
+  // const handleCustomFieldChange = (fieldName, value) => {
+  //   setCustomFields((prevFields) => ({
+  //     ...prevFields,
+  //     [fieldName]: value,
+  //   }));
+  // };
 
   return (
     <>
@@ -64,6 +100,24 @@ function CreateCollection(props) {
               value={image}
               onChange={setImage}
             />
+            <Text>Custom fields</Text>
+            {Array.from({ length: 3 }).map((_, index) => (
+              <Flex gap={10} justify={"space-between"} w={"100%"}>
+                <Input
+                  placeholder={`custom field ${index + 1}`}
+                  onChange={(e) =>
+                    handleChangeCustomFieldName(e.target.value, index, true)
+                  }
+                />
+                <Input
+                  key={index}
+                  placeholder="value"
+                  onChange={(e) =>
+                    handleChangeCustomFieldName(e.target.value, index, false)
+                  }
+                />
+              </Flex>
+            ))}
             <Button color="red" radius="lg" onClick={createClick}>
               {t("create")}
             </Button>

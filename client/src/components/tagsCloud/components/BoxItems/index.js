@@ -1,15 +1,12 @@
-import { Card, Flex, Loader, LoadingOverlay } from "@mantine/core";
-import { IconCross, IconX, IconZoomCancel } from "@tabler/icons-react";
+import { Card, Flex, Loader } from "@mantine/core";
+import { IconX, IconZoomCancel } from "@tabler/icons-react";
 import { useItemsByTag } from "../../../../core/useItemsByTag";
 import { Item } from "../../../item";
-import { useSelector } from "react-redux";
 
 const BoxItems = (props) => {
   const { tag, setBoxItems } = props;
   const { data: items, isFetching: isLoading } = useItemsByTag(tag);
-  // const email = useSelector((state) => state.user.email);
-
-  // const isCreator = () => email === collection.user.email;
+  
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Flex direction={"column"} align={"center"}>

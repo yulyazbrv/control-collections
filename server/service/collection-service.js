@@ -4,20 +4,21 @@ const itemModel = require("../models/item-model");
 const userModel = require("../models/user-model");
 
 class CollectionService {
-  async addCollection(email, name, description, theme, img) {
+  async addCollection(email, name, description, theme, img, customFields) {
     const candidate = await userModel.findOne({ email });
     if (!candidate) {
       throw new Error(`User with ${email} does not exist`);
     }
-
-    const collection = await collectionModel.create({
+    const collectionData = {
       user: candidate._id,
       name: name,
       description: description,
       theme: theme,
       image: img,
+      customFields : JSON.parse(customFields),
+    };  
 
-    });
+    const collection = await collectionModel.create(collectionData);
 
     return collection;
   }
@@ -69,6 +70,12 @@ class CollectionService {
       .findOne({ _id: id })
       .populate("user");
     return collection;
+  }
+
+  async getCollectionFields(id) {
+    const collection = await collectionModel
+      .findOne({ _id: id })
+    return collection.customFields;
   }
 
   async getUserCollections(email) {

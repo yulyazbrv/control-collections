@@ -1,4 +1,4 @@
-import { Flex, Image, LoadingOverlay, Text } from "@mantine/core";
+import { Flex, Image, LoadingOverlay, Select, Text } from "@mantine/core";
 import { useCollections } from "../../core/useCollections";
 import { Collection } from "../../components/collection";
 import emptyIcon from "./assets/nothing.png";
@@ -7,17 +7,52 @@ import { TagsCloud } from "../../components/tagsCloud";
 import { useItems } from "../../core/useItems";
 import { Item } from "../../components/item";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { ActionIcon, useMantineColorScheme } from "@mantine/core";
+import { IconSun, IconMoonStars } from "@tabler/icons-react";
 
 const HomePage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [language, setLanguage] = useState(i18n.language);
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const dark = colorScheme === "dark";
   const { data: collections, isFetching: isLoading } = useCollections();
-  const { data: items, isFetching: isLoadingItems } = useItems();
+  const { data: items } = useItems();
   const email = useSelector((state) => state.user.email) || "";
   const biggestCollections = collections
     ? collections.sort((a, b) => b.items.length - a.items.length).slice(0, 5)
     : [];
+
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [language, i18n]);
+
   return (
     <Flex align={"center"} direction={"column"} justify={"center"}>
+      <Flex justify={"space-between"} maw={900} w={"100%"}>
+        <Select
+          mt={50}
+          w={"90px"}
+          radius="lg"
+          size={"xs"}
+          value={language}
+          onChange={setLanguage}
+          data={[
+            { value: "en", label: "English" },
+            { value: "pl", label: "Polish" },
+          ]}
+        ></Select>
+        <ActionIcon
+          mt={50}
+          variant="outline"
+          color={dark ? "yellow" : "red"}
+          onClick={() => toggleColorScheme()}
+          title="Toggle color scheme"
+        >
+          {dark ? <IconSun size="1.1rem" /> : <IconMoonStars size="1.1rem" />}
+        </ActionIcon>
+      </Flex>
+
       <TagsCloud></TagsCloud>
       <Flex direction={"column"} mt={30} w={"100%"} align={"center"}>
         <LoadingOverlay visible={isLoading} overlayBlur={5} />
@@ -36,14 +71,8 @@ const HomePage = () => {
           </Flex>
         )}
         <Text mt={30}>{t("Last added items")}</Text>
-        {items && (
-          items.map((item, index) => (
-            <Item
-              key={index}
-              item={item}
-            ></Item>
-          ))
-        )}
+        {items &&
+          items.map((item, index) => <Item key={index} item={item}></Item>)}
       </Flex>
     </Flex>
   );

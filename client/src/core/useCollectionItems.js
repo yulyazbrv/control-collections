@@ -13,7 +13,7 @@ export const useCollectionItems = (id) => {
     {
       enabled: !!id,
       refetchOnWindowFocus: false,
-      refetchOnMount: false,
+      refetchOnMount: true,
       refetchOnReconnect: false,
       staleTime: Infinity,
     }

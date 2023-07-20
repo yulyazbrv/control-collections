@@ -1,6 +1,6 @@
-import { Button, Flex, Image, Loader, LoadingOverlay, Title } from "@mantine/core";
+import { Button, Flex, Image, LoadingOverlay, Title } from "@mantine/core";
 import { IconFileDescription } from "@tabler/icons-react";
-import emptyIcon from "./assets/nothing.png";
+import emptyIcon from "./assets/preview.jpg";
 import { useCollectionItems } from "../../core/useCollectionItems";
 import { useSelector } from "react-redux";
 import { Item } from "../../components/item";
@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import { Filters } from "./components/Filters";
 import { useParams } from "react-router-dom";
 import { useCollectionById } from "../../core/useCollectionById";
-import { DeleteModal } from "../../components/deleteModal";
 import { useTranslation } from "react-i18next";
 import { useAdmin } from "../../core/useAdmin";
 
@@ -79,6 +78,7 @@ const CollectionPage = () => {
                 <Flex direction={"column"} w={"100%"} maw={300} mt={110}>
                   <LoadingOverlay visible={isLoading} overlayBlur={2} />
                   <Image
+                    radius={20}
                     alt="nothing"
                     src={emptyIcon}
                   ></Image>

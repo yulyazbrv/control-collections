@@ -7,7 +7,7 @@ import {
   Title,
 } from "@mantine/core";
 import { useUsers } from "../../core/useUsers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useCollections } from "../../core/useCollections";
 import { Collection } from "../../components/collection";
@@ -18,9 +18,11 @@ import { IconLogout } from "@tabler/icons-react";
 import { logoutUser } from "../../api/authApi/logout";
 import { addAdmin } from "../../api/userApi/addAdmin";
 import { deleteAdmin } from "../../api/userApi/deleteAdmin";
-import emptyIcon from "./assets/nothing.png";
+import emptyIcon from "./assets/preview.jpg";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import "./style.css";
+import { useAdmin } from "../../core/useAdmin";
 
 const AdminPanel = (props) => {
   const { setAuth, auth } = props;
@@ -31,6 +33,14 @@ const AdminPanel = (props) => {
   const { data: collections, isFetching: isLoadingCollectons } =
     useCollections();
   const navigate = useNavigate();
+  const { data: isAdmin } = useAdmin(email);
+
+  useEffect(() => {
+    if (!isAdmin) {
+      logoutUser();
+      setAuth(false);
+    }
+  }, [isAdmin, setAuth]);
 
   const handleCheckboxChange = (email) => {
     if (selectedEmail.includes(email)) {
@@ -95,7 +105,6 @@ const AdminPanel = (props) => {
               onChange={() => handleCheckboxChange(user.email)}
             ></input>
           </td>
-          <td>{user._id}</td>
           <td>{user.name}</td>
           <td>{user.email}</td>
           <td>{user.isAdmin.toString()}</td>
@@ -109,7 +118,12 @@ const AdminPanel = (props) => {
       {auth ? (
         <Flex mt={70} direction={"column"} gap={40} w={"100%"} maw={900}>
           <LoadingOverlay visible={isLoading} overlayBlur={2} />
-          <Flex justify={"space-between"} align={"center"}>
+          <Flex
+            justify={"space-between"}
+            align={"center"}
+            wrap={"wrap"}
+            gap={5}
+          >
             <Flex direction={"column"} gap={5}>
               <Flex align={"center"} gap={10}>
                 <Title order={3}>
@@ -153,11 +167,10 @@ const AdminPanel = (props) => {
               </Flex>
             </Flex>
           </Flex>
-          <Table>
+          <Table highlightOnHover withBorder>
             <thead>
               <tr>
                 <th></th>
-                <th>id</th>
                 <th>name</th>
                 <th>email</th>
                 <th>is admin</th>
@@ -186,7 +199,12 @@ const AdminPanel = (props) => {
       ) : (
         <Flex direction={"column"} w={"100%"} maw={300} mt={110}>
           <LoadingOverlay visible={isLoading} overlayBlur={2} />
-          <Image alt="nothing" src={emptyIcon} className="empty-img"></Image>
+          <Image
+            alt="nothing"
+            radius={20}
+            src={emptyIcon}
+            className="empty-img"
+          ></Image>
           <Button color="red" radius="lg" onClick={loginClick}>
             {t("sign in")}
           </Button>

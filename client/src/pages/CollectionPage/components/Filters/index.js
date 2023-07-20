@@ -40,7 +40,7 @@ const Filters = (props) => {
           { value: "tags", label: t("tags") },
         ]}
       ></Select>
-      <Button color="red" radius="lg" uppercase onClick={confirmSort}>
+      <Button color="red" radius="lg" onClick={confirmSort}>
         {t("confirm")}
       </Button>
     </Flex>
