@@ -74,7 +74,7 @@ const UserPage = (props) => {
             </Flex>
             <Flex direction={"column"} align={"center"} w={"100%"}>
               <LoadingOverlay visible={isLoading} overlayBlur={2} />
-              {collections ? (
+              {collections && collections.length !== 0 ? (
                 collections.map((collection, index) => (
                   <Collection
                     key={index}
