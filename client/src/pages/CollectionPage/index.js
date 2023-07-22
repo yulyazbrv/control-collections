@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { useAdmin } from "../../core/useAdmin";
 
 const CollectionPage = (props) => {
+  const {auth} = props
   const { t } = useTranslation();
   const [opened, { open, close }] = useDisclosure(false);
   const { id } = useParams();
@@ -87,6 +88,7 @@ const CollectionPage = (props) => {
                     item={item}
                     isCreator={isCreator}
                     refetch={refetch}
+                    auth={auth}
                   ></Item>
                 ))
               ) : (
