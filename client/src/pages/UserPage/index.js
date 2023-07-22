@@ -42,7 +42,7 @@ const UserPage = (props) => {
           opened={opened}
           refetch={refetch}
         ></CreateCollection>
-        {auth ? (
+        {auth && (
           <Flex
             direction={"column"}
             gap={20}
@@ -74,30 +74,30 @@ const UserPage = (props) => {
             </Flex>
             <Flex direction={"column"} align={"center"} w={"100%"}>
               <LoadingOverlay visible={isLoading} overlayBlur={2} />
-              {collections
-                ? collections.map((collection, index) => (
-                    <Collection
-                      key={index}
-                      collection={collection}
-                      email={email}
-                      refetch={refetch}
-                      auth={auth}
-                    ></Collection>
-                  ))
-                : []}
+              {collections ? (
+                collections.map((collection, index) => (
+                  <Collection
+                    key={index}
+                    collection={collection}
+                    email={email}
+                    refetch={refetch}
+                    auth={auth}
+                  ></Collection>
+                ))
+              ) : (
+                <Flex direction={"column"} w={"100%"} maw={300} mt={110}>
+                  <Image
+                    radius={20}
+                    alt="nothing"
+                    src={emptyIcon}
+                    className="empty-img"
+                  ></Image>
+                  <Button color="red" radius="lg" onClick={loginClick}>
+                    {t("sign in")}
+                  </Button>
+                </Flex>
+              )}
             </Flex>
-          </Flex>
-        ) : (
-          <Flex direction={"column"} w={"100%"} maw={300} mt={110}>
-            <Image
-              radius={20}
-              alt="nothing"
-              src={emptyIcon}
-              className="empty-img"
-            ></Image>
-            <Button color="red" radius="lg" onClick={loginClick}>
-              {t("sign in")}
-            </Button>
           </Flex>
         )}
       </Flex>
