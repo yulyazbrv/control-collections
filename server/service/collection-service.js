@@ -100,7 +100,6 @@ class CollectionService {
     };
     const itemsIdArray = [];
     const collections = await collectionModel.find(queryCollection);
-    console.log(JSON.stringify(collections));
     if (collections.length !== 0) {
       collections.forEach((collection) => {
         if (collection.items.length !== 0) {

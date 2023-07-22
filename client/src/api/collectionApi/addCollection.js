@@ -14,7 +14,6 @@ export const addCollection = async (email, name, description, theme, image, cust
       const percentCompleted = Math.round(
         (progressEvent.loaded * 100) / progressEvent.total
       );
-      console.log(`upload process: ${percentCompleted}%`);
     },
   });
   return response;

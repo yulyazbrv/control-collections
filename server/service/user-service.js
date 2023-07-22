@@ -172,7 +172,6 @@ class UserService {
     if (!candidate) {
       throw new Error(`User with ${email} isnot exists`);
     }
-    console.log("user", candidate)
     const checkAdmin = candidate.isAdmin
     return checkAdmin
   }
