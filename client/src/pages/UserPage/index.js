@@ -82,6 +82,7 @@ const UserPage = (props) => {
                       collection={collection}
                       email={email}
                       refetch={refetch}
+                      auth={auth}
                     ></Collection>
                   ))
                 : []}

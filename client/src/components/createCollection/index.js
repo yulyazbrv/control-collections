@@ -54,12 +54,6 @@ function CreateCollection(props) {
       setResult(e.message);
     }
   };
-  // const handleCustomFieldChange = (fieldName, value) => {
-  //   setCustomFields((prevFields) => ({
-  //     ...prevFields,
-  //     [fieldName]: value,
-  //   }));
-  // };
 
   return (
     <>
@@ -102,7 +96,7 @@ function CreateCollection(props) {
             />
             <Text>Custom fields</Text>
             {Array.from({ length: 3 }).map((_, index) => (
-              <Flex gap={10} justify={"space-between"} w={"100%"}>
+              <Flex gap={10} justify={"space-between"} w={"100%"} key={index}>
                 <Input
                   placeholder={`custom field ${index + 1}`}
                   onChange={(e) =>

@@ -14,7 +14,6 @@ import { useAdmin } from "../../core/useAdmin";
 
 const Collection = (props) => {
   const { collection, email, refetch, auth } = props;
-
   const { t } = useTranslation();
   const [opened, { open, close }] = useDisclosure(false);
   const [openedModal, { open: openModal, close: closeModal }] =
