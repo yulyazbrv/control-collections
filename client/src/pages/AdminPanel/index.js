@@ -27,10 +27,10 @@ import { useAdmin } from "../../core/useAdmin";
 const AdminPanel = (props) => {
   const { setAuth, auth } = props;
   const { t } = useTranslation();
-  const { data: users, isFetching: isLoading, refetch } = useUsers();
+  const { data: users, isFetching: isLoading,  refetch: refetchUsers } = useUsers();
   const email = useSelector((state) => state.user.email);
   const [selectedEmail, setSelectedEmail] = useState([]);
-  const { data: collections, isFetching: isLoadingCollectons } =
+  const { data: collections, isFetching: isLoadingCollectons, refetch } =
     useCollections();
   const navigate = useNavigate();
   const { data: isAdmin } = useAdmin(email);
@@ -64,31 +64,31 @@ const AdminPanel = (props) => {
   const blockClick = async () => {
     await blockUser(selectedEmail);
     setSelectedEmail([]);
-    refetch();
+    refetchUsers();
   };
 
   const unblockClick = async () => {
     await unblockUser(selectedEmail);
     setSelectedEmail([]);
-    refetch();
+    refetchUsers();
   };
 
   const removeClick = async () => {
     await deleteUser(selectedEmail);
     setSelectedEmail([]);
-    refetch();
+    refetchUsers();
   };
 
   const addAdminClick = async () => {
     await addAdmin(selectedEmail);
     setSelectedEmail([]);
-    refetch();
+    refetchUsers();
   };
 
   const removeAdminClick = async () => {
     await deleteAdmin(selectedEmail);
     setSelectedEmail([]);
-    refetch();
+    refetchUsers();
   };
 
   const loginClick = () => {
@@ -189,6 +189,7 @@ const AdminPanel = (props) => {
                     collection={collection}
                     email={email}
                     auth={auth}
+                    refetch={refetch}
                   ></Collection>
                 ))
               ) : (
