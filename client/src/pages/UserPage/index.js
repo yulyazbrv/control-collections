@@ -92,8 +92,8 @@ const UserPage = (props) => {
                     src={emptyIcon}
                     className="empty-img"
                   ></Image>
-                  <Button color="red" radius="lg" onClick={loginClick}>
-                    {t("sign in")}
+                  <Button color="red" radius="lg" onClick={open}>
+                    {t("create collection")}
                   </Button>
                 </Flex>
               )}
