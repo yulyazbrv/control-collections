@@ -20,7 +20,6 @@ const SearchArea = (props) => {
           visible={isLoading || isLoadingIds}
           overlayBlur={5}
         ></LoadingOverlay>
-
         {items ? (
           items.map((item, index) => (
             <Item key={index} item={item} refetch={refetch}></Item>

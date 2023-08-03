@@ -40,8 +40,6 @@ class UserService {
 
     const userDto = new UserDto(candidate);
     const tokens = tokenService.generateTokens({ ...userDto });
-    const res = await tokenService.saveToken(userDto.id, tokens.refreshToken);
-    const t = await tokenModel.find();
     return { ...tokens, candidate: userDto };
   }
 
@@ -55,7 +53,7 @@ class UserService {
       if (!refreshToken) {
         throw new Error("Token Error1");
       }
-      const t = await tokenModel.find();
+
       const userData = tokenService.validateRefreshToken(refreshToken);
       const tokenFromDb = await tokenModel.findOne({
         refreshToken: refreshToken,
@@ -71,19 +69,17 @@ class UserService {
 
       const userDto = new UserDto(user);
       const tokens = tokenService.generateTokens({ ...userDto });
-      const r = await tokenService.saveToken(userDto.id, tokens.refreshToken);
-
       return { ...tokens, user: userDto };
     } catch (error) {
       throw new Error(error.message);
     }
   }
-  //admin
+
   async getAllUsers() {
     const users = await UserModel.find();
     return users;
   }
-  //admin
+
   async removeUser(email) {
     const candidate = await UserModel.findOne({ email });
     if (!candidate) {
@@ -99,7 +95,7 @@ class UserService {
         console.error(err);
       });
   }
-  //admin
+
   async blockUser(email) {
     const candidate = await UserModel.findOne({ email });
     if (!candidate) {
@@ -117,7 +113,7 @@ class UserService {
     const token = await tokenModel.deleteOne({ user: candidate._id });
     return { token, blockedUser };
   }
-  //admin
+
   async unblockUser(email) {
     const candidate = await UserModel.findOne({ email });
     if (!candidate) {
@@ -134,7 +130,7 @@ class UserService {
     const unblockedUser = await UserModel.updateOne(filter, updateDoc, options);
     return unblockedUser;
   }
-  //admin
+
   async addAdmin(email) {
     const candidate = await UserModel.findOne({ email });
     if (!candidate) {
@@ -150,7 +146,7 @@ class UserService {
     const adminUser = await UserModel.updateOne(filter, updateDoc, options);
     return adminUser;
   }
-  //admin
+
   async removeAdmin(email) {
     const candidate = await UserModel.findOne({ email });
     if (!candidate) {

@@ -4,8 +4,8 @@ import { Comment } from "./components/comment";
 import { useState } from "react";
 import { addComment } from "../../api/commentApi/addComment";
 import { useSelector } from "react-redux";
-import "./style.css";
 import { useTranslation } from "react-i18next";
+import "./style.css";
 
 const Comments = (props) => {
   const { item, setCountOfComments } = props;
@@ -14,12 +14,13 @@ const Comments = (props) => {
   const [result, setResult] = useState("");
   const [textComment, setTextComment] = useState("");
   const email = useSelector((state) => state.user.email);
+
   const sendComment = async () => {
     try {
       await addComment(email, item._id, textComment);
       setTextComment("");
       setResult("Succesfully");
-      setCountOfComments(item.comments.length + 1)
+      setCountOfComments(item.comments.length + 1);
       refetch();
     } catch (e) {
       setResult(e.message);
@@ -49,7 +50,7 @@ const Comments = (props) => {
         withAsterisk
         onChange={(e) => setTextComment(e.currentTarget.value)}
       />
-      <Button color="red" radius="lg"  onClick={sendComment}>
+      <Button color="red" radius="lg" onClick={sendComment}>
         {t("send")}
       </Button>
       <Title order={6}>{result}</Title>

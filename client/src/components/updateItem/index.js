@@ -13,7 +13,7 @@ function UpdateItem(props) {
     try {
       await updateItem(item._id, name, tags);
       close();
-      refetch()
+      refetch();
     } catch (e) {
       setResult(e.message);
     }
@@ -49,7 +49,7 @@ function UpdateItem(props) {
             />
 
             <Button color="red" radius="lg" onClick={updateClick}>
-            {t("update")}
+              {t("update")}
             </Button>
             <Title order={6}>{result}</Title>
           </Flex>

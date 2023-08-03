@@ -13,7 +13,7 @@ const TagsCloud = () => {
         tags.find((tag) => tag.name === name)
       )
     : [];
-    
+
   return (
     <Flex direction={"column"} mt={10} maw={900}>
       <Card shadow="sm" padding="lg" radius="md" withBorder>

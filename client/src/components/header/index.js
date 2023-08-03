@@ -1,13 +1,13 @@
 import { Flex } from "@mantine/core";
 import { Link, useLocation } from "react-router-dom";
 import classNames from "classnames";
-import "./style.css";
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SearchModal } from "./components/searchModal";
 import { useAdmin } from "../../core/useAdmin";
 import { useSelector } from "react-redux";
+import "./style.css";
 
 const HeaderContent = (props) => {
   const { t } = useTranslation();

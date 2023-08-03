@@ -15,11 +15,10 @@ class CollectionService {
       description: description,
       theme: theme,
       image: img,
-      customFields : JSON.parse(customFields),
-    };  
+      customFields: JSON.parse(customFields),
+    };
 
     const collection = await collectionModel.create(collectionData);
-
     return collection;
   }
 
@@ -38,6 +37,7 @@ class CollectionService {
     if (!collection) {
       throw new Error(`Collection with id ${id} isnot exists`);
     }
+
     const filter = { _id: id };
     const updateDoc = {
       $set: {
@@ -46,12 +46,14 @@ class CollectionService {
         theme: theme,
       },
     };
+
     const options = { upsert: true };
     const updatedCollection = await collectionModel.updateOne(
       filter,
       updateDoc,
       options
     );
+
     if (updatedCollection) {
       console.log("Collection update succesfully");
       return updatedCollection;
@@ -73,8 +75,7 @@ class CollectionService {
   }
 
   async getCollectionFields(id) {
-    const collection = await collectionModel
-      .findOne({ _id: id })
+    const collection = await collectionModel.findOne({ _id: id });
     return collection.customFields;
   }
 
@@ -120,7 +121,6 @@ class CollectionService {
     }
 
     const uniqueItemsIdArray = Array.from(new Set(itemsIdArray));
-
     return uniqueItemsIdArray;
   }
 }

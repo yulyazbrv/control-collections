@@ -1,4 +1,4 @@
-import {  putHelper } from "../../helpers/apiHelper";
+import { putHelper } from "../../helpers/apiHelper";
 
 export const deleteAdmin = async (emailArray) => {
   if (emailArray) {

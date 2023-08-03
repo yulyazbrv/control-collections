@@ -42,6 +42,7 @@ class ItemService {
     if (!item) {
       throw new Error(`Item with id ${id} isnot exists`);
     }
+
     const collection = await collectionModel.findById({
       _id: item.itemCollection,
     });
@@ -58,6 +59,7 @@ class ItemService {
     if (!item) {
       throw new Error(`Item with id ${id} isnot exists`);
     }
+
     const filter = { _id: id };
     const tagsArray = tags
       ? tags.split(" ").filter((tag) => tag.startsWith("#"))
@@ -69,6 +71,7 @@ class ItemService {
       },
     };
     const options = { upsert: true };
+
     const updatedItem = await itemModel.updateOne(filter, updateDoc, options);
       if (tagsArray.length) {
         const createTags = async () => {
@@ -128,6 +131,7 @@ class ItemService {
           model: "User",
         },
       });
+      
     return items;
   }
 

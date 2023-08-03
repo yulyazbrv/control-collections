@@ -48,7 +48,7 @@ const Item = (props) => {
   }, [email, item._id]);
 
   useEffect(() => {
-    setCountOfComments(item.comments.length)
+    setCountOfComments(item.comments.length);
   }, [item]);
 
   const sendLike = async () => {

@@ -6,8 +6,7 @@ export const blockUser = async (emailArray) => {
       return putHelper("/block", { email });
     });
     Promise.all(responses);
-  }else {
+  } else {
     console.log("emailArray is empty");
   }
 };
-

@@ -1,6 +1,13 @@
 import { postHelper } from "../../helpers/apiHelper";
 
-export const addCollection = async (email, name, description, theme, image, customFields) => {
+export const addCollection = async (
+  email,
+  name,
+  description,
+  theme,
+  image,
+  customFields
+) => {
   const formData = new FormData();
   formData.set("email", email);
   formData.set("name", name);

@@ -27,11 +27,18 @@ import { useAdmin } from "../../core/useAdmin";
 const AdminPanel = (props) => {
   const { setAuth, auth } = props;
   const { t } = useTranslation();
-  const { data: users, isFetching: isLoading,  refetch: refetchUsers } = useUsers();
+  const {
+    data: users,
+    isFetching: isLoading,
+    refetch: refetchUsers,
+  } = useUsers();
   const email = useSelector((state) => state.user.email);
   const [selectedEmail, setSelectedEmail] = useState([]);
-  const { data: collections, isFetching: isLoadingCollectons, refetch } =
-    useCollections();
+  const {
+    data: collections,
+    isFetching: isLoadingCollectons,
+    refetch,
+  } = useCollections();
   const navigate = useNavigate();
   const { data: isAdmin } = useAdmin(email);
 
@@ -193,7 +200,7 @@ const AdminPanel = (props) => {
                   ></Collection>
                 ))
               ) : (
-                <Flex>{/* <Image src={emptyIcon} alt="empty"></Image> */}</Flex>
+                <Flex></Flex>
               )}
             </Flex>
           </Flex>

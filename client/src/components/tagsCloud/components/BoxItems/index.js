@@ -6,7 +6,7 @@ import { Item } from "../../../item";
 const BoxItems = (props) => {
   const { tag, setBoxItems } = props;
   const { data: items, isFetching: isLoading } = useItemsByTag(tag);
-  
+
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Flex direction={"column"} align={"center"}>

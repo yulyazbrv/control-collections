@@ -20,12 +20,14 @@ const Collection = (props) => {
     useDisclosure(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isCreator = () => email === collection.user.email;
+  const { data: isAdmin } = useAdmin(email);
 
   const openItem = () => {
     dispatch(setCollection(collection));
-
     navigate(`/collection/${collection._id}`, { replace: true });
   };
+
   const handleDelete = async () => {
     try {
       await removeCollection(collection._id);
@@ -35,8 +37,6 @@ const Collection = (props) => {
       console.log(e.message);
     }
   };
-  const isCreator = () => email === collection.user.email;
-  const { data: isAdmin } = useAdmin(email);
 
   return (
     <>
