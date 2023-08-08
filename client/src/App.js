@@ -86,13 +86,19 @@ const App = () => {
             <Route path="/registration" element={<Registration />}></Route>
             <Route path="/login" element={<Login setAuth={setAuth} />}></Route>
             <Route path="/home" element={<HomePage auth={auth} />}></Route>
-            <Route path="/admin" element={<AdminPanel auth={auth} setAuth={setAuth} />}></Route>
+            <Route
+              path="/admin"
+              element={<AdminPanel auth={auth} setAuth={setAuth} />}
+            ></Route>
             <Route
               path="/user"
               element={<UserPage auth={auth} setAuth={setAuth} />}
             ></Route>
             <Route path="/collection">
-              <Route path=":id" element={<CollectionPage auth={auth} />}></Route>
+              <Route
+                path=":id"
+                element={<CollectionPage auth={auth} />}
+              ></Route>
             </Route>
           </Routes>
         </AppShell>

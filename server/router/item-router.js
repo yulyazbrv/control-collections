@@ -1,6 +1,7 @@
 const Router = require("express").Router;
 const ItemRouter = new Router();
 const itemController = require("../controllers/item-controller");
+const authMiddleware = require("../middlewares/auth-middleware");
 
 ItemRouter.post("/addItem", authMiddleware, itemController.addItem);
 ItemRouter.put("/updateItem", authMiddleware, itemController.updateItem);
